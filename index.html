@@ -2,1478 +2,1494 @@
 <html lang="en">
 
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Sangeet Sharma</title>
-  <link
-    href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=JetBrains+Mono:wght@300;400;500&family=Spectral:ital,wght@0,300;0,400;1,300&display=swap"
-    rel="stylesheet" />
-  <style>
-    :root {
-      --bg: #0b0c0e;
-      --surface: #111318;
-      --border: #1e2028;
-      --text: #c8cad4;
-      --muted: #555868;
-      --accent: #7eb8a4;
-      --accent2: #c4875a;
-      --accent3: #8b9cc8;
-      --white: #edeef2;
-      --nav-scrolled-bg: rgba(11, 12, 14, 0.92);
-      --btn-primary-text: #0b0c0e;
-    }
-
-    :root.light {
-      --bg: #f5f4f0;
-      --surface: #eceae4;
-      --border: #d8d5cc;
-      --text: #3a3830;
-      --muted: #8a8678;
-      --accent: #3d8c76;
-      --accent2: #b5631e;
-      --accent3: #4a5ea8;
-      --white: #1a1814;
-      --nav-scrolled-bg: rgba(245, 244, 240, 0.92);
-      --btn-primary-text: #f5f4f0;
-    }
-
-    *,
-    *::before,
-    *::after {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
-
-    html {
-      scroll-behavior: smooth;
-    }
-
-    body {
-      background: var(--bg);
-      color: var(--text);
-      font-family: 'Spectral', Georgia, serif;
-      font-weight: 300;
-      line-height: 1.7;
-      overflow-x: hidden;
-      transition: background 0.35s ease, color 0.35s ease;
-    }
-
-    /* Grain overlay */
-    body::before {
-      content: '';
-      position: fixed;
-      inset: 0;
-      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
-      pointer-events: none;
-      z-index: 9999;
-      opacity: 0.6;
-    }
-
-    /* Navigation */
-    nav {
-      position: fixed;
-      top: 0;
-      left: 0;
-      right: 0;
-      z-index: 100;
-      padding: 1.2rem 3rem;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      border-bottom: 1px solid transparent;
-      transition: border-color 0.3s, background 0.3s;
-    }
-
-    nav.scrolled {
-      background: var(--nav-scrolled-bg);
-      backdrop-filter: blur(12px);
-      border-color: var(--border);
-    }
-
-    .nav-logo {
-      font-family: 'DM Serif Display', serif;
-      font-size: 1.1rem;
-      color: var(--white);
-      letter-spacing: 0.02em;
-    }
-
-    .nav-links {
-      display: flex;
-      gap: 2rem;
-      list-style: none;
-    }
-
-    .nav-links a {
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 0.72rem;
-      color: var(--muted);
-      text-decoration: none;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      transition: color 0.2s;
-    }
-
-    .nav-links a:hover {
-      color: var(--accent);
-    }
-
-    .nav-right {
-      display: flex;
-      align-items: center;
-      gap: 1.5rem;
-    }
-
-    /* Theme toggle */
-    .theme-toggle {
-      background: none;
-      border: 1px solid var(--border);
-      cursor: pointer;
-      width: 36px;
-      height: 36px;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: var(--muted);
-      transition: border-color 0.2s, color 0.2s, background 0.2s;
-      flex-shrink: 0;
-    }
-
-    .theme-toggle:hover {
-      border-color: var(--accent);
-      color: var(--accent);
-      background: rgba(126, 184, 164, 0.08);
-    }
-
-    .theme-toggle svg {
-      width: 15px;
-      height: 15px;
-      fill: currentColor;
-    }
-
-    .icon-moon {
-      display: block;
-    }
-
-    .icon-sun {
-      display: none;
-    }
-
-    :root.light .icon-moon {
-      display: none;
-    }
-
-    :root.light .icon-sun {
-      display: block;
-    }
-
-    /* Social icons in nav */
-    .nav-socials {
-      display: flex;
-      align-items: center;
-      gap: 0.75rem;
-    }
-
-    .nav-socials a {
-      color: var(--muted);
-      transition: color 0.2s;
-      display: flex;
-      align-items: center;
-    }
-
-    .nav-socials a:hover {
-      color: var(--accent);
-    }
-
-    .nav-socials svg {
-      width: 16px;
-      height: 16px;
-      fill: currentColor;
-    }
-
-    /* Hero */
-    .hero {
-      min-height: 100vh;
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      position: relative;
-      overflow: hidden;
-    }
-
-    .hero-left {
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      padding: 8rem 4rem 4rem 5rem;
-      position: relative;
-      z-index: 2;
-    }
-
-    .hero-tag {
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 0.68rem;
-      letter-spacing: 0.18em;
-      text-transform: uppercase;
-      color: var(--accent);
-      margin-bottom: 1.5rem;
-      opacity: 0;
-      animation: fadeUp 0.8s 0.2s forwards;
-    }
-
-    .hero-name {
-      font-family: 'DM Serif Display', serif;
-      font-size: clamp(3.5rem, 6vw, 6rem);
-      line-height: 1.0;
-      color: var(--white);
-      margin-bottom: 1.8rem;
-      opacity: 0;
-      animation: fadeUp 0.8s 0.4s forwards;
-    }
-
-    .hero-name em {
-      font-style: italic;
-      color: var(--accent2);
-    }
-
-    .hero-subtitle {
-      font-family: 'Spectral', serif;
-      font-style: italic;
-      font-size: 1.05rem;
-      color: var(--muted);
-      margin-bottom: 2.5rem;
-      opacity: 0;
-      animation: fadeUp 0.8s 0.6s forwards;
-    }
-
-    .hero-desc {
-      font-size: 1rem;
-      color: var(--text);
-      max-width: 440px;
-      line-height: 1.8;
-      margin-bottom: 2.5rem;
-      opacity: 0;
-      animation: fadeUp 0.8s 0.6s forwards;
-    }
-
-    .hero-links {
-      display: flex;
-      gap: 1rem;
-      opacity: 0;
-      animation: fadeUp 0.8s 0.8s forwards;
-    }
-
-    .btn {
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 0.72rem;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      text-decoration: none;
-      padding: 0.75rem 1.6rem;
-      border: 1px solid;
-      transition: all 0.25s;
-      display: inline-block;
-    }
-
-    .btn-primary {
-      background: var(--accent);
-      border-color: var(--accent);
-      color: var(--btn-primary-text);
-    }
-
-    .btn-primary:hover {
-      background: transparent;
-      color: var(--accent);
-    }
-
-    .btn-ghost {
-      background: transparent;
-      border-color: var(--border);
-      color: var(--muted);
-    }
-
-    .btn-ghost:hover {
-      border-color: var(--accent3);
-      color: var(--accent3);
-    }
-
-    /* Hero right - abstract visual */
-    .hero-right {
-      position: relative;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      overflow: hidden;
-    }
-
-    .hero-visual {
-      position: relative;
-      width: 380px;
-      height: 380px;
-      opacity: 0;
-      animation: fadeIn 1.2s 0.6s forwards;
-    }
-
-    .ring {
-      position: absolute;
-      border-radius: 50%;
-      border: 1px solid;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-    }
-
-    .ring-1 {
-      width: 340px;
-      height: 340px;
-      border-color: rgba(126, 184, 164, 0.12);
-      animation: spin 30s linear infinite;
-    }
-
-    .ring-2 {
-      width: 260px;
-      height: 260px;
-      border-color: rgba(196, 135, 90, 0.10);
-      animation: spin 20s linear infinite reverse;
-    }
-
-    .ring-3 {
-      width: 180px;
-      height: 180px;
-      border-color: rgba(139, 156, 200, 0.14);
-      animation: spin 14s linear infinite;
-    }
-
-    .dot {
-      position: absolute;
-      border-radius: 50%;
-    }
-
-    .dot-1 {
-      width: 8px;
-      height: 8px;
-      background: var(--accent);
-      top: 10px;
-      left: 50%;
-      animation: orbit1 30s linear infinite;
-    }
-
-    .dot-2 {
-      width: 6px;
-      height: 6px;
-      background: var(--accent2);
-      top: 50%;
-      left: 10px;
-      animation: orbit2 20s linear infinite reverse;
-    }
-
-    .dot-3 {
-      width: 5px;
-      height: 5px;
-      background: var(--accent3);
-      top: 50%;
-      right: 10px;
-      animation: orbit3 14s linear infinite;
-    }
-
-    .core-circle {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      width: 90px;
-      height: 90px;
-      border-radius: 50%;
-      background: radial-gradient(circle at 35% 35%, rgba(126, 184, 164, 0.25), rgba(11, 12, 14, 0.6));
-      border: 1px solid rgba(126, 184, 164, 0.25);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-
-    .core-text {
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 0.55rem;
-      color: var(--accent);
-      letter-spacing: 0.05em;
-      text-align: center;
-      line-height: 1.6;
-    }
-
-    /* Vertical label on right side */
-    .hero-vertical-label {
-      position: absolute;
-      right: 2rem;
-      bottom: 3rem;
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 0.62rem;
-      color: var(--muted);
-      letter-spacing: 0.15em;
-      text-transform: uppercase;
-      writing-mode: vertical-rl;
-      text-orientation: mixed;
-      opacity: 0;
-      animation: fadeIn 1s 1.2s forwards;
-    }
-
-    /* Divider line */
-    .section-divider {
-      height: 1px;
-      background: linear-gradient(90deg, transparent, var(--border), transparent);
-      margin: 0 3rem;
-    }
-
-    /* Sections */
-    section {
-      padding: 7rem 5rem;
-      max-width: 1200px;
-      margin: 0 auto;
-    }
-
-    .section-header {
-      display: flex;
-      align-items: baseline;
-      gap: 1.5rem;
-      margin-bottom: 4rem;
-    }
-
-    .section-num {
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 0.65rem;
-      color: var(--accent);
-      letter-spacing: 0.15em;
-    }
-
-    .section-title {
-      font-family: 'DM Serif Display', serif;
-      font-size: 2.4rem;
-      color: var(--white);
-      line-height: 1.1;
-    }
-
-    .section-line {
-      flex: 1;
-      height: 1px;
-      background: var(--border);
-      margin-left: 1rem;
-      align-self: center;
-    }
-
-    /* Projects list — single column */
-    .projects-list {
-      display: flex;
-      flex-direction: column;
-      gap: 1.5px;
-      background: var(--border);
-    }
-
-    .project-card-full {
-      background: var(--bg);
-      padding: 3rem;
-      position: relative;
-      overflow: hidden;
-      display: grid;
-      grid-template-columns: 1fr 280px;
-      gap: 4rem;
-      align-items: start;
-      transition: background 0.3s;
-    }
-
-    .project-card-full::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 3px;
-      height: 0;
-      background: var(--card-accent, var(--accent));
-      transition: height 0.5s ease;
-    }
-
-    .project-card-full:hover::before {
-      height: 100%;
-    }
-
-    .project-card-full:hover {
-      background: var(--surface);
-    }
-
-    .pcf-stats {
-      display: flex;
-      flex-direction: column;
-      gap: 1.8rem;
-      padding-top: 0.5rem;
-      border-left: 1px solid var(--border);
-      padding-left: 3rem;
-    }
-
-    .stat-block {}
-
-    .stat-num {
-      font-family: 'DM Serif Display', serif;
-      font-size: 2.6rem;
-      color: var(--card-accent, var(--accent));
-      line-height: 1;
-      margin-bottom: 0.3rem;
-    }
-
-    .stat-lbl {
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 0.62rem;
-      color: var(--muted);
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      line-height: 1.4;
-    }
-
-    .winner-cell {
-      color: var(--card-accent, var(--accent));
-      font-weight: 500;
-    }
-
-    .project-tag {
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 0.62rem;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      color: var(--card-accent, var(--accent));
-      margin-bottom: 1rem;
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-    }
-
-    .project-tag::before {
-      content: '';
-      display: inline-block;
-      width: 16px;
-      height: 1px;
-      background: var(--card-accent, var(--accent));
-    }
-
-    .project-name {
-      font-family: 'DM Serif Display', serif;
-      font-size: 2rem;
-      color: var(--white);
-      margin-bottom: 1.2rem;
-      line-height: 1.1;
-    }
-
-    .project-desc {
-      font-size: 0.95rem;
-      color: var(--text);
-      line-height: 1.85;
-      margin-bottom: 1rem;
-    }
-
-    .project-stat {
-      display: inline-block;
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 0.68rem;
-      padding: 0.3rem 0.7rem;
-      border: 1px solid var(--border);
-      color: var(--muted);
-      margin-right: 0.5rem;
-      margin-bottom: 0.5rem;
-      letter-spacing: 0.06em;
-    }
-
-    .project-link {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.4rem;
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 0.68rem;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      color: var(--card-accent, var(--accent));
-      text-decoration: none;
-      border-bottom: 1px solid transparent;
-      transition: border-color 0.2s;
-    }
-
-    .project-link:hover {
-      border-color: var(--card-accent, var(--accent));
-    }
-
-    .project-link::after {
-      content: '→';
-    }
-
-    .benchmark-table {
-      width: 100%;
-      border-collapse: collapse;
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 0.68rem;
-      margin-top: 1.5rem;
-    }
-
-    .benchmark-table th {
-      text-align: left;
-      padding: 0.5rem 0.75rem;
-      color: var(--muted);
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      border-bottom: 1px solid var(--border);
-    }
-
-    .benchmark-table td {
-      padding: 0.5rem 0.75rem;
-      color: var(--text);
-      border-bottom: 1px solid rgba(30, 32, 40, 0.5);
-    }
-
-    .benchmark-table tr.winner td {
-      color: var(--accent);
-      font-weight: 500;
-    }
-
-    /* About */
-    .about-grid {
-      display: grid;
-      grid-template-columns: 2fr 1fr;
-      gap: 5rem;
-      align-items: start;
-    }
-
-    .about-text p {
-      font-size: 1.05rem;
-      color: var(--text);
-      margin-bottom: 1.3rem;
-      line-height: 1.85;
-    }
-
-    .about-text p:first-child {
-      font-size: 1.2rem;
-      color: var(--white);
-    }
-
-    .about-ps {
-      margin-top: 2rem;
-      font-family: 'Spectral', serif;
-      font-style: italic;
-      font-size: 1.05rem !important;
-      color: var(--white) !important;
-      line-height: 1.8;
-    }
-
-    .about-aside {
-      position: sticky;
-      top: 6rem;
-    }
-
-    .info-block {
-      margin-bottom: 2rem;
-    }
-
-    .info-label {
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 0.62rem;
-      letter-spacing: 0.14em;
-      text-transform: uppercase;
-      color: var(--accent);
-      margin-bottom: 0.4rem;
-    }
-
-    .info-value {
-      font-size: 0.92rem;
-      color: var(--text);
-    }
-
-    .info-value a {
-      color: var(--accent3);
-      text-decoration: none;
-      border-bottom: 1px solid transparent;
-      transition: border-color 0.2s;
-    }
-
-    .info-value a:hover {
-      border-color: var(--accent3);
-    }
-
-    .tags-list {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.4rem;
-      margin-top: 0.4rem;
-    }
-
-    .tag {
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 0.62rem;
-      padding: 0.25rem 0.6rem;
-      background: var(--surface);
-      border: 1px solid var(--border);
-      color: var(--muted);
-      letter-spacing: 0.06em;
-    }
-
-    /* Footer */
-    footer {
-      border-top: 1px solid var(--border);
-      padding: 3rem 5rem;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      max-width: 1200px;
-      margin: 0 auto;
-    }
-
-    .footer-name {
-      font-family: 'DM Serif Display', serif;
-      font-size: 1.1rem;
-      color: var(--white);
-    }
-
-    .footer-meta {
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 0.65rem;
-      color: var(--muted);
-      letter-spacing: 0.1em;
-    }
-
-    .footer-links {
-      display: flex;
-      gap: 1.5rem;
-    }
-
-    .footer-links a {
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 0.65rem;
-      color: var(--muted);
-      text-decoration: none;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      transition: color 0.2s;
-    }
-
-    .footer-links a:hover {
-      color: var(--accent);
-    }
-
-    /* Animations */
-    @keyframes fadeUp {
-      from {
-        opacity: 0;
-        transform: translateY(20px);
-      }
-
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
-
-    @keyframes fadeIn {
-      from {
-        opacity: 0;
-      }
-
-      to {
-        opacity: 1;
-      }
-    }
-
-    @keyframes spin {
-      from {
-        transform: translate(-50%, -50%) rotate(0deg);
-      }
-
-      to {
-        transform: translate(-50%, -50%) rotate(360deg);
-      }
-    }
-
-    @keyframes orbit1 {
-      from {
-        transform: rotate(0deg) translateX(170px) rotate(0deg);
-      }
-
-      to {
-        transform: rotate(360deg) translateX(170px) rotate(-360deg);
-      }
-    }
-
-    @keyframes orbit2 {
-      from {
-        transform: rotate(0deg) translateX(130px) rotate(0deg);
-      }
-
-      to {
-        transform: rotate(360deg) translateX(130px) rotate(-360deg);
-      }
-    }
-
-    @keyframes orbit3 {
-      from {
-        transform: rotate(0deg) translateX(90px) rotate(0deg);
-      }
-
-      to {
-        transform: rotate(360deg) translateX(90px) rotate(-360deg);
-      }
-    }
-
-    /* Scroll reveal */
-    .reveal {
-      opacity: 0;
-      transform: translateY(30px);
-      transition: opacity 0.7s ease, transform 0.7s ease;
-    }
-
-    .reveal.visible {
-      opacity: 1;
-      transform: translateY(0);
-    }
-
-    /* Mobile */
-    @media (max-width: 768px) {
-      nav {
-        padding: 1rem 1.5rem;
-      }
-
-      .nav-links {
-        display: none;
-      }
-
-      .hero {
-        grid-template-columns: 1fr;
-      }
-
-      .hero-left {
-        padding: 6rem 2rem 3rem;
-      }
-
-      .hero-right {
-        display: none;
-      }
-
-      section {
-        padding: 4rem 2rem;
-      }
-
-      .project-card-full {
-        grid-template-columns: 1fr;
-        padding: 2rem;
-        gap: 2rem;
-      }
-
-      .pcf-stats {
-        border-left: none;
-        border-top: 1px solid var(--border);
-        padding-left: 0;
-        padding-top: 2rem;
-        flex-direction: row;
-        flex-wrap: wrap;
-        gap: 1.2rem;
-      }
-
-      .stat-num {
-        font-size: 2rem;
-      }
-
-      .about-grid {
-        grid-template-columns: 1fr;
-      }
-
-      footer {
-        flex-direction: column;
-        gap: 1.5rem;
-        text-align: center;
-      }
-    }
-  </style>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sangeet Sharma</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=JetBrains+Mono:wght@300;400;500&family=Spectral:ital,wght@0,300;0,400;1,300&display=swap"
+        rel="stylesheet" />
+    <style>
+        :root {
+            --bg: #0b0c0e;
+            --surface: #111318;
+            --border: #1e2028;
+            --text: #c8cad4;
+            --muted: #555868;
+            --accent: #7eb8a4;
+            --accent2: #c4875a;
+            --accent3: #8b9cc8;
+            --white: #edeef2;
+            --nav-scrolled-bg: rgba(11, 12, 14, 0.92);
+            --btn-primary-text: #0b0c0e;
+        }
+
+        :root.light {
+            --bg: #f5f4f0;
+            --surface: #eceae4;
+            --border: #d8d5cc;
+            --text: #3a3830;
+            --muted: #8a8678;
+            --accent: #3d8c76;
+            --accent2: #b5631e;
+            --accent3: #4a5ea8;
+            --white: #1a1814;
+            --nav-scrolled-bg: rgba(245, 244, 240, 0.92);
+            --btn-primary-text: #f5f4f0;
+        }
+
+        *,
+        *::before,
+        *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background: var(--bg);
+            color: var(--text);
+            font-family: 'Spectral', Georgia, serif;
+            font-weight: 300;
+            line-height: 1.7;
+            overflow-x: hidden;
+            transition: background 0.35s ease, color 0.35s ease;
+        }
+
+        /* Grain overlay */
+        body::before {
+            content: '';
+            position: fixed;
+            inset: 0;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+            pointer-events: none;
+            z-index: 9999;
+            opacity: 0.6;
+        }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 100;
+            padding: 1.2rem 3rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid transparent;
+            transition: border-color 0.3s, background 0.3s;
+        }
+
+        nav.scrolled {
+            background: var(--nav-scrolled-bg);
+            backdrop-filter: blur(12px);
+            border-color: var(--border);
+        }
+
+        .nav-logo {
+            font-family: 'DM Serif Display', serif;
+            font-size: 1.1rem;
+            color: var(--white);
+            letter-spacing: 0.02em;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.72rem;
+            color: var(--muted);
+            text-decoration: none;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            transition: color 0.2s;
+        }
+
+        .nav-links a:hover {
+            color: var(--accent);
+        }
+
+        .nav-right {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+        }
+
+        /* Theme toggle */
+        .theme-toggle {
+            background: none;
+            border: 1px solid var(--border);
+            cursor: pointer;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--muted);
+            transition: border-color 0.2s, color 0.2s, background 0.2s;
+            flex-shrink: 0;
+        }
+
+        .theme-toggle:hover {
+            border-color: var(--accent);
+            color: var(--accent);
+            background: rgba(126, 184, 164, 0.08);
+        }
+
+        .theme-toggle svg {
+            width: 15px;
+            height: 15px;
+            fill: currentColor;
+        }
+
+        .icon-moon {
+            display: block;
+        }
+
+        .icon-sun {
+            display: none;
+        }
+
+        :root.light .icon-moon {
+            display: none;
+        }
+
+        :root.light .icon-sun {
+            display: block;
+        }
+
+        /* Social icons in nav */
+        .nav-socials {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .nav-socials a {
+            color: var(--muted);
+            transition: color 0.2s;
+            display: flex;
+            align-items: center;
+        }
+
+        .nav-socials a:hover {
+            color: var(--accent);
+        }
+
+        .nav-socials svg {
+            width: 16px;
+            height: 16px;
+            fill: currentColor;
+        }
+
+        /* Hero */
+        .hero {
+            min-height: 100vh;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-left {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding: 8rem 4rem 4rem 5rem;
+            position: relative;
+            z-index: 2;
+        }
+
+        .hero-tag {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.68rem;
+            letter-spacing: 0.18em;
+            text-transform: uppercase;
+            color: var(--accent);
+            margin-bottom: 1.5rem;
+            opacity: 0;
+            animation: fadeUp 0.8s 0.2s forwards;
+        }
+
+        .hero-name {
+            font-family: 'DM Serif Display', serif;
+            font-size: clamp(3.5rem, 6vw, 6rem);
+            line-height: 1.0;
+            color: var(--white);
+            margin-bottom: 1.8rem;
+            opacity: 0;
+            animation: fadeUp 0.8s 0.4s forwards;
+        }
+
+        .hero-name em {
+            font-style: italic;
+            color: var(--accent2);
+        }
+
+        .hero-subtitle {
+            font-family: 'Spectral', serif;
+            font-style: italic;
+            font-size: 1.05rem;
+            color: var(--muted);
+            margin-bottom: 2.5rem;
+            opacity: 0;
+            animation: fadeUp 0.8s 0.6s forwards;
+        }
+
+        .hero-desc {
+            font-size: 1rem;
+            color: var(--text);
+            max-width: 440px;
+            line-height: 1.8;
+            margin-bottom: 2.5rem;
+            opacity: 0;
+            animation: fadeUp 0.8s 0.6s forwards;
+        }
+
+        .hero-links {
+            display: flex;
+            gap: 1rem;
+            opacity: 0;
+            animation: fadeUp 0.8s 0.8s forwards;
+        }
+
+        .btn {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.72rem;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            text-decoration: none;
+            padding: 0.75rem 1.6rem;
+            border: 1px solid;
+            transition: all 0.25s;
+            display: inline-block;
+        }
+
+        .btn-primary {
+            background: var(--accent);
+            border-color: var(--accent);
+            color: var(--btn-primary-text);
+        }
+
+        .btn-primary:hover {
+            background: transparent;
+            color: var(--accent);
+        }
+
+        .btn-ghost {
+            background: transparent;
+            border-color: var(--border);
+            color: var(--muted);
+        }
+
+        .btn-ghost:hover {
+            border-color: var(--accent3);
+            color: var(--accent3);
+        }
+
+        /* Hero right - abstract visual */
+        .hero-right {
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+
+        .hero-visual {
+            position: relative;
+            width: 380px;
+            height: 380px;
+            opacity: 0;
+            animation: fadeIn 1.2s 0.6s forwards;
+        }
+
+        .ring {
+            position: absolute;
+            border-radius: 50%;
+            border: 1px solid;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        .ring-1 {
+            width: 340px;
+            height: 340px;
+            border-color: rgba(126, 184, 164, 0.12);
+            animation: spin 30s linear infinite;
+        }
+
+        .ring-2 {
+            width: 260px;
+            height: 260px;
+            border-color: rgba(196, 135, 90, 0.10);
+            animation: spin 20s linear infinite reverse;
+        }
+
+        .ring-3 {
+            width: 180px;
+            height: 180px;
+            border-color: rgba(139, 156, 200, 0.14);
+            animation: spin 14s linear infinite;
+        }
+
+        .dot {
+            position: absolute;
+            border-radius: 50%;
+        }
+
+        .dot-1 {
+            width: 8px;
+            height: 8px;
+            background: var(--accent);
+            top: 10px;
+            left: 50%;
+            animation: orbit1 30s linear infinite;
+        }
+
+        .dot-2 {
+            width: 6px;
+            height: 6px;
+            background: var(--accent2);
+            top: 50%;
+            left: 10px;
+            animation: orbit2 20s linear infinite reverse;
+        }
+
+        .dot-3 {
+            width: 5px;
+            height: 5px;
+            background: var(--accent3);
+            top: 50%;
+            right: 10px;
+            animation: orbit3 14s linear infinite;
+        }
+
+        .core-circle {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 90px;
+            height: 90px;
+            border-radius: 50%;
+            background: radial-gradient(circle at 35% 35%, rgba(126, 184, 164, 0.25), rgba(11, 12, 14, 0.6));
+            border: 1px solid rgba(126, 184, 164, 0.25);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .core-text {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.55rem;
+            color: var(--accent);
+            letter-spacing: 0.05em;
+            text-align: center;
+            line-height: 1.6;
+        }
+
+        /* Vertical label on right side */
+        .hero-vertical-label {
+            position: absolute;
+            right: 2rem;
+            bottom: 3rem;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.62rem;
+            color: var(--muted);
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            writing-mode: vertical-rl;
+            text-orientation: mixed;
+            opacity: 0;
+            animation: fadeIn 1s 1.2s forwards;
+        }
+
+        /* Divider line */
+        .section-divider {
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--border), transparent);
+            margin: 0 3rem;
+        }
+
+        /* Sections */
+        section {
+            padding: 7rem 5rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section-header {
+            display: flex;
+            align-items: baseline;
+            gap: 1.5rem;
+            margin-bottom: 4rem;
+        }
+
+        .section-num {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.65rem;
+            color: var(--accent);
+            letter-spacing: 0.15em;
+        }
+
+        .section-title {
+            font-family: 'DM Serif Display', serif;
+            font-size: 2.4rem;
+            color: var(--white);
+            line-height: 1.1;
+        }
+
+        .section-line {
+            flex: 1;
+            height: 1px;
+            background: var(--border);
+            margin-left: 1rem;
+            align-self: center;
+        }
+
+        /* Projects list — single column */
+        .projects-list {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5px;
+            background: var(--border);
+        }
+
+        .project-card-full {
+            background: var(--bg);
+            padding: 3rem;
+            position: relative;
+            overflow: hidden;
+            display: grid;
+            grid-template-columns: 1fr 280px;
+            gap: 4rem;
+            align-items: start;
+            transition: background 0.3s;
+        }
+
+        .project-card-full::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 3px;
+            height: 0;
+            background: var(--card-accent, var(--accent));
+            transition: height 0.5s ease;
+        }
+
+        .project-card-full:hover::before {
+            height: 100%;
+        }
+
+        .project-card-full:hover {
+            background: var(--surface);
+        }
+
+        .pcf-stats {
+            display: flex;
+            flex-direction: column;
+            gap: 1.8rem;
+            padding-top: 0.5rem;
+            border-left: 1px solid var(--border);
+            padding-left: 3rem;
+        }
+
+        .stat-block {}
+
+        .stat-num {
+            font-family: 'DM Serif Display', serif;
+            font-size: 2.6rem;
+            color: var(--card-accent, var(--accent));
+            line-height: 1;
+            margin-bottom: 0.3rem;
+        }
+
+        .stat-lbl {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.62rem;
+            color: var(--muted);
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            line-height: 1.4;
+        }
+
+        .winner-cell {
+            color: var(--card-accent, var(--accent));
+            font-weight: 500;
+        }
+
+        .project-tag {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.62rem;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            color: var(--card-accent, var(--accent));
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .project-tag::before {
+            content: '';
+            display: inline-block;
+            width: 16px;
+            height: 1px;
+            background: var(--card-accent, var(--accent));
+        }
+
+        .project-name {
+            font-family: 'DM Serif Display', serif;
+            font-size: 2rem;
+            color: var(--white);
+            margin-bottom: 1.2rem;
+            line-height: 1.1;
+        }
+
+        .project-desc {
+            font-size: 0.95rem;
+            color: var(--text);
+            line-height: 1.85;
+            margin-bottom: 1rem;
+        }
+
+        .project-stat {
+            display: inline-block;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.68rem;
+            padding: 0.3rem 0.7rem;
+            border: 1px solid var(--border);
+            color: var(--muted);
+            margin-right: 0.5rem;
+            margin-bottom: 0.5rem;
+            letter-spacing: 0.06em;
+        }
+
+        .project-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.68rem;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: var(--card-accent, var(--accent));
+            text-decoration: none;
+            border-bottom: 1px solid transparent;
+            transition: border-color 0.2s;
+        }
+
+        .project-link:hover {
+            border-color: var(--card-accent, var(--accent));
+        }
+
+        .project-link::after {
+            content: '→';
+        }
+
+        .benchmark-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.68rem;
+            margin-top: 1.5rem;
+        }
+
+        .benchmark-table th {
+            text-align: left;
+            padding: 0.5rem 0.75rem;
+            color: var(--muted);
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .benchmark-table td {
+            padding: 0.5rem 0.75rem;
+            color: var(--text);
+            border-bottom: 1px solid rgba(30, 32, 40, 0.5);
+        }
+
+        .benchmark-table tr.winner td {
+            color: var(--accent);
+            font-weight: 500;
+        }
+
+        /* About */
+        .about-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 5rem;
+            align-items: start;
+        }
+
+        .about-text p {
+            font-size: 1.05rem;
+            color: var(--text);
+            margin-bottom: 1.3rem;
+            line-height: 1.85;
+        }
+
+        .about-text p:first-child {
+            font-size: 1.2rem;
+            color: var(--white);
+        }
+
+        .about-ps {
+            margin-top: 2rem;
+            font-family: 'Spectral', serif;
+            font-style: italic;
+            font-size: 1.05rem !important;
+            color: var(--white) !important;
+            line-height: 1.8;
+        }
+
+        .about-aside {
+            position: sticky;
+            top: 6rem;
+        }
+
+        .info-block {
+            margin-bottom: 2rem;
+        }
+
+        .info-label {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.62rem;
+            letter-spacing: 0.14em;
+            text-transform: uppercase;
+            color: var(--accent);
+            margin-bottom: 0.4rem;
+        }
+
+        .info-value {
+            font-size: 0.92rem;
+            color: var(--text);
+        }
+
+        .info-value a {
+            color: var(--accent3);
+            text-decoration: none;
+            border-bottom: 1px solid transparent;
+            transition: border-color 0.2s;
+        }
+
+        .info-value a:hover {
+            border-color: var(--accent3);
+        }
+
+        .tags-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.4rem;
+            margin-top: 0.4rem;
+        }
+
+        .tag {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.62rem;
+            padding: 0.25rem 0.6rem;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            color: var(--muted);
+            letter-spacing: 0.06em;
+        }
+
+        /* Footer */
+        footer {
+            border-top: 1px solid var(--border);
+            padding: 3rem 5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .footer-name {
+            font-family: 'DM Serif Display', serif;
+            font-size: 1.1rem;
+            color: var(--white);
+        }
+
+        .footer-meta {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.65rem;
+            color: var(--muted);
+            letter-spacing: 0.1em;
+        }
+
+        .footer-links {
+            display: flex;
+            gap: 1.5rem;
+        }
+
+        .footer-links a {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.65rem;
+            color: var(--muted);
+            text-decoration: none;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            transition: color 0.2s;
+        }
+
+        .footer-links a:hover {
+            color: var(--accent);
+        }
+
+        /* Animations */
+        @keyframes fadeUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+
+            to {
+                opacity: 1;
+            }
+        }
+
+        @keyframes spin {
+            from {
+                transform: translate(-50%, -50%) rotate(0deg);
+            }
+
+            to {
+                transform: translate(-50%, -50%) rotate(360deg);
+            }
+        }
+
+        @keyframes orbit1 {
+            from {
+                transform: rotate(0deg) translateX(170px) rotate(0deg);
+            }
+
+            to {
+                transform: rotate(360deg) translateX(170px) rotate(-360deg);
+            }
+        }
+
+        @keyframes orbit2 {
+            from {
+                transform: rotate(0deg) translateX(130px) rotate(0deg);
+            }
+
+            to {
+                transform: rotate(360deg) translateX(130px) rotate(-360deg);
+            }
+        }
+
+        @keyframes orbit3 {
+            from {
+                transform: rotate(0deg) translateX(90px) rotate(0deg);
+            }
+
+            to {
+                transform: rotate(360deg) translateX(90px) rotate(-360deg);
+            }
+        }
+
+        /* Scroll reveal */
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.7s ease, transform 0.7s ease;
+        }
+
+        .reveal.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Mobile */
+        @media (max-width: 768px) {
+            nav {
+                padding: 1rem 1.5rem;
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+            .hero {
+                grid-template-columns: 1fr;
+            }
+
+            .hero-left {
+                padding: 6rem 2rem 3rem;
+            }
+
+            .hero-right {
+                display: none;
+            }
+
+            section {
+                padding: 4rem 2rem;
+            }
+
+            .project-card-full {
+                grid-template-columns: 1fr;
+                padding: 2rem;
+                gap: 2rem;
+            }
+
+            .pcf-stats {
+                border-left: none;
+                border-top: 1px solid var(--border);
+                padding-left: 0;
+                padding-top: 2rem;
+                flex-direction: row;
+                flex-wrap: wrap;
+                gap: 1.2rem;
+            }
+
+            .stat-num {
+                font-size: 2rem;
+            }
+
+            .about-grid {
+                grid-template-columns: 1fr;
+            }
+
+            footer {
+                flex-direction: column;
+                gap: 1.5rem;
+                text-align: center;
+            }
+        }
+    </style>
 </head>
 
 <body>
 
-  <!-- Navigation -->
-  <nav id="navbar">
-    <div class="nav-logo">Sangeet Sharma</div>
-    <ul class="nav-links">
-      <li><a href="#work">Work</a></li>
-      <li><a href="#about">About</a></li>
-    </ul>
-    <div class="nav-right">
-      <div class="nav-socials">
-        <!-- LinkedIn -->
-        <a href="https://linkedin.com/in/sangeet-sangit" target="_blank" title="LinkedIn">
-          <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-            <path
-              d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" />
-          </svg>
-        </a>
-        <!-- GitHub -->
-        <a href="https://github.com/sangeet01" target="_blank" title="GitHub">
-          <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-            <path
-              d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12" />
-          </svg>
-        </a>
-        <!-- arXiv -->
-        <a href="https://arxiv.org/abs/2601.15205" target="_blank" title="arXiv Paper">
-          <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-            <path
-              d="M9.007 0C4.472 0 .5 3.52.5 7.997v8.006C.5 20.481 4.472 24 9.007 24h5.986C19.528 24 23.5 20.48 23.5 16.003V7.997C23.5 3.519 19.528 0 14.993 0zm-.68 5.065l1.67 2.516 1.724-2.516h1.238L11.1 8.044l2.159 3.233h-1.294l-1.75-2.669-1.75 2.669H7.17l2.16-3.233-1.86-2.979zm7.547 6.212v.894H7.854v-.894z" />
-          </svg>
-        </a>
-      </div>
-      <button class="theme-toggle" id="themeToggle" title="Toggle theme" aria-label="Toggle light/dark mode">
-        <!-- Moon (shown in dark mode) -->
-        <svg class="icon-moon" viewBox="0 0 24 24">
-          <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z" />
-        </svg>
-        <!-- Sun (shown in light mode) -->
-        <svg class="icon-sun" viewBox="0 0 24 24">
-          <path
-            d="M12 2a1 1 0 011 1v1a1 1 0 01-2 0V3a1 1 0 011-1zm0 15a1 1 0 011 1v1a1 1 0 01-2 0v-1a1 1 0 011-1zm8.66-9.5a1 1 0 010 1.41l-.71.71a1 1 0 01-1.41-1.41l.71-.71a1 1 0 011.41 0zM5.64 18.36a1 1 0 010 1.41l-.71.71a1 1 0 01-1.41-1.41l.71-.71a1 1 0 011.41 0zM22 12a1 1 0 01-1 1h-1a1 1 0 010-2h1a1 1 0 011 1zM4 12a1 1 0 01-1 1H2a1 1 0 010-2h1a1 1 0 011 1zm15.07 5.07a1 1 0 01-1.41 0l-.71-.71a1 1 0 011.41-1.41l.71.71a1 1 0 010 1.41zM7.05 7.05a1 1 0 01-1.41 0l-.71-.71A1 1 0 016.34 4.93l.71.71a1 1 0 010 1.41zM12 7a5 5 0 110 10A5 5 0 0112 7z" />
-        </svg>
-      </button>
-    </div>
-  </nav>
+    <!-- Navigation -->
+    <nav id="navbar">
+        <div class="nav-logo">Sangeet Sharma</div>
+        <ul class="nav-links">
+            <li><a href="#work">Work</a></li>
+            <li><a href="#about">About</a></li>
+        </ul>
+        <div class="nav-right">
+            <div class="nav-socials">
+                <!-- LinkedIn -->
+                <a href="https://linkedin.com/in/sangeet-sangit" target="_blank" title="LinkedIn">
+                    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path
+                            d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" />
+                    </svg>
+                </a>
+                <!-- GitHub -->
+                <a href="https://github.com/sangeet01" target="_blank" title="GitHub">
+                    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path
+                            d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12" />
+                    </svg>
+                </a>
+                <!-- arXiv -->
+                <a href="https://arxiv.org/abs/2601.15205" target="_blank" title="arXiv Paper">
+                    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path
+                            d="M9.007 0C4.472 0 .5 3.52.5 7.997v8.006C.5 20.481 4.472 24 9.007 24h5.986C19.528 24 23.5 20.48 23.5 16.003V7.997C23.5 3.519 19.528 0 14.993 0zm-.68 5.065l1.67 2.516 1.724-2.516h1.238L11.1 8.044l2.159 3.233h-1.294l-1.75-2.669-1.75 2.669H7.17l2.16-3.233-1.86-2.979zm7.547 6.212v.894H7.854v-.894z" />
+                    </svg>
+                </a>
+            </div>
+            <button class="theme-toggle" id="themeToggle" title="Toggle theme" aria-label="Toggle light/dark mode">
+                <!-- Moon (shown in dark mode) -->
+                <svg class="icon-moon" viewBox="0 0 24 24">
+                    <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z" />
+                </svg>
+                <!-- Sun (shown in light mode) -->
+                <svg class="icon-sun" viewBox="0 0 24 24">
+                    <path
+                        d="M12 2a1 1 0 011 1v1a1 1 0 01-2 0V3a1 1 0 011-1zm0 15a1 1 0 011 1v1a1 1 0 01-2 0v-1a1 1 0 011-1zm8.66-9.5a1 1 0 010 1.41l-.71.71a1 1 0 01-1.41-1.41l.71-.71a1 1 0 011.41 0zM5.64 18.36a1 1 0 010 1.41l-.71.71a1 1 0 01-1.41-1.41l.71-.71a1 1 0 011.41 0zM22 12a1 1 0 01-1 1h-1a1 1 0 010-2h1a1 1 0 011 1zM4 12a1 1 0 01-1 1H2a1 1 0 010-2h1a1 1 0 011 1zm15.07 5.07a1 1 0 01-1.41 0l-.71-.71a1 1 0 011.41-1.41l.71.71a1 1 0 010 1.41zM7.05 7.05a1 1 0 01-1.41 0l-.71-.71A1 1 0 016.34 4.93l.71.71a1 1 0 010 1.41zM12 7a5 5 0 110 10A5 5 0 0112 7z" />
+                </svg>
+            </button>
+        </div>
+    </nav>
 
-  <!-- Hero -->
-  <section class="hero">
-    <div class="hero-left">
-      <p class="hero-tag">Researcher · Nepal · Chemistry & Code</p>
-      <h1 class="hero-name">Sangeet<br /><em>Sharma</em></h1>
-      <p class="hero-desc">
-        A pharmacy undergrad bridging physics, biology, chemistry, and computation.
-        I build things that probably shouldn't work then benchmark them until they do.
-      </p>
-      <div class="hero-links">
-        <a href="#work" class="btn btn-primary">View Work</a>
-        <a href="https://github.com/sangeet01" target="_blank" class="btn btn-ghost">GitHub →</a>
-      </div>
-    </div>
-    <div class="hero-right">
-      <div class="hero-visual">
-        <div class="ring ring-1"></div>
-        <div class="ring ring-2"></div>
-        <div class="ring ring-3"></div>
-        <div class="dot dot-1"></div>
-        <div class="dot dot-2"></div>
-        <div class="dot dot-3"></div>
-        <div class="core-circle">
-          <div class="core-text">biology<br />chemistry<br />code</div>
+    <!-- Hero -->
+    <section class="hero">
+        <div class="hero-left">
+            <p class="hero-tag">Undergrad · Nepal · Chemistry & Code</p>
+            <h1 class="hero-name">Sangeet<br /><em>Sharma</em></h1>
+            <p class="hero-desc">
+                A pharmacy undergrad bridging physics, biology, chemistry, and computation.
+                I build things that probably shouldn't work then benchmark them until they do.
+            </p>
+            <div class="hero-links">
+                <a href="#work" class="btn btn-primary">View Work</a>
+                <a href="https://github.com/sangeet01" target="_blank" class="btn btn-ghost">GitHub →</a>
+            </div>
         </div>
-      </div>
-      <div class="hero-vertical-label">sangeet01.github.io</div>
-    </div>
-  </section>
+        <div class="hero-right">
+            <div class="hero-visual">
+                <div class="ring ring-1"></div>
+                <div class="ring ring-2"></div>
+                <div class="ring ring-3"></div>
+                <div class="dot dot-1"></div>
+                <div class="dot dot-2"></div>
+                <div class="dot dot-3"></div>
+                <div class="core-circle">
+                    <div class="core-text">biology<br />chemistry<br />code</div>
+                </div>
+            </div>
+            <div class="hero-vertical-label">sangeet01.github.io</div>
+        </div>
+    </section>
 
-  <div class="section-divider"></div>
+    <div class="section-divider"></div>
 
-  <!-- Projects -->
-  <section id="work">
-    <div class="section-header reveal">
-      <span class="section-num">01</span>
-      <h2 class="section-title">Selected Work</h2>
-      <div class="section-line"></div>
-    </div>
+    <!-- Projects -->
+    <section id="work">
+        <div class="section-header reveal">
+            <span class="section-num">01</span>
+            <h2 class="section-title">Selected Work</h2>
+            <div class="section-line"></div>
+        </div>
 
-    <div class="projects-list">
+        <div class="projects-list">
 
-      <!-- 1. Numen -->
-      <div class="project-card-full reveal" style="--card-accent: #7eb8a4;">
-        <div class="pcf-left">
-          <div class="project-tag">Information Retrieval · arXiv 2601.15205</div>
-          <h3 class="project-name">Numen</h3>
-          <p class="project-desc">
-            Dense retrieval models have a hard theoretical ceiling where their embedding dimension limits
-            how many document combinations they can represent. DeepMind's 2025 LIMIT benchmark proved
-            this formally, and state-of-the-art 7B parameter models like GritLM and E5-Mistral failed
-            catastrophically on it, scoring below 13% Recall@100.
-          </p>
-          <p class="project-desc">
-            Numen bypasses this entirely with <strong style="color: var(--accent);">Character N-Gram Hashing</strong>,
-            a training-free, vocabulary-free approach that maps text into vector spaces of arbitrary size
-            using deterministic CRC32 hashing of 3, 4, and 5-grams. No pretraining. No fine-tuning.
-            Scale the dimension to 32768 and it simply works, outperforming everything including BM25 and
-            making it <strong style="color: var(--accent);">the first dense retrieval model to beat sparse keyword
-              search</strong>
-            on the LIMIT benchmark.
-          </p>
-          <table class="benchmark-table">
-            <thead>
-              <tr>
-                <th>Model</th>
-                <th>Type</th>
-                <th>Dim</th>
-                <th>Recall@100</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr class="winner">
-                <td>Numen</td>
-                <td>Dense</td>
-                <td>32768</td>
-                <td>93.90% 🏆</td>
-              </tr>
-              <tr>
-                <td>BM25</td>
-                <td>Sparse</td>
-                <td>~50k</td>
-                <td>93.6%</td>
-              </tr>
-              <tr>
-                <td>Numen</td>
-                <td>Dense</td>
-                <td>16384</td>
-                <td>93.05%</td>
-              </tr>
-              <tr>
-                <td>Numen</td>
-                <td>Dense</td>
-                <td>8192</td>
-                <td>89.85%</td>
-              </tr>
-              <tr>
-                <td>Promptriever</td>
-                <td>Dense</td>
-                <td>4096</td>
-                <td>18.9%</td>
-              </tr>
-              <tr>
-                <td>GritLM 7B</td>
-                <td>Dense</td>
-                <td>4096</td>
-                <td>12.9%</td>
-              </tr>
-              <tr>
-                <td>E5-Mistral 7B</td>
-                <td>Dense</td>
-                <td>4096</td>
-                <td>8.3%</td>
-              </tr>
-            </tbody>
-          </table>
-          <div style="margin-top:1.5rem;">
-            <span class="project-stat">Jupyter Notebook</span>
-            <span class="project-stat">Apache 2.0</span>
-            <span class="project-stat">arXiv 2026</span>
-            <span class="project-stat">43 commits</span>
-          </div>
-          <div style="margin-top:1.2rem;">
-            <a href="https://github.com/sangeet01/limitnumen" target="_blank" class="project-link">View Repository</a>
-            &nbsp;&nbsp;
-            <a href="https://arxiv.org/abs/2601.15205" target="_blank" class="project-link">arXiv Paper</a>
-          </div>
-        </div>
-        <div class="pcf-stats">
-          <div class="stat-block">
-            <div class="stat-num">93.9%</div>
-            <div class="stat-lbl">Recall@100 on the LIMIT benchmark</div>
-          </div>
-          <div class="stat-block">
-            <div class="stat-num" style="color:var(--accent2);">#1</div>
-            <div class="stat-lbl">First dense model to beat BM25</div>
-          </div>
-          <div class="stat-block">
-            <div class="stat-num" style="color:var(--accent3);">0</div>
-            <div class="stat-lbl">Training examples required</div>
-          </div>
-          <div class="stat-block">
-            <div class="stat-num">∞</div>
-            <div class="stat-lbl">Scalable to any dimension</div>
-          </div>
-        </div>
-      </div>
+            <!-- 1. Numen -->
+            <div class="project-card-full reveal" style="--card-accent: #7eb8a4;">
+                <div class="pcf-left">
+                    <div class="project-tag">Information Retrieval · arXiv 2601.15205</div>
+                    <h3 class="project-name">Numen</h3>
+                    <p class="project-desc">
+                        Dense retrieval models have a hard theoretical ceiling where their embedding dimension limits
+                        how many document combinations they can represent. DeepMind's 2025 LIMIT benchmark proved
+                        this formally, and state-of-the-art 7B parameter models like GritLM and E5-Mistral failed
+                        catastrophically on it, scoring below 13% Recall@100.
+                    </p>
+                    <p class="project-desc">
+                        Numen bypasses this entirely with <strong style="color: var(--accent);">Character N-Gram
+                            Hashing</strong>,
+                        a training-free, vocabulary-free approach that maps text into vector spaces of arbitrary size
+                        using deterministic CRC32 hashing of 3, 4, and 5-grams. No pretraining. No fine-tuning.
+                        Scale the dimension to 32768 and it simply works, outperforming everything including BM25 and
+                        making it <strong style="color: var(--accent);">the first dense retrieval model to beat sparse
+                            keyword
+                            search</strong>
+                        on the LIMIT benchmark.
+                    </p>
+                    <table class="benchmark-table">
+                        <thead>
+                            <tr>
+                                <th>Model</th>
+                                <th>Type</th>
+                                <th>Dim</th>
+                                <th>Recall@100</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr class="winner">
+                                <td>Numen</td>
+                                <td>Dense</td>
+                                <td>32768</td>
+                                <td>93.90% 🏆</td>
+                            </tr>
+                            <tr>
+                                <td>BM25</td>
+                                <td>Sparse</td>
+                                <td>~50k</td>
+                                <td>93.6%</td>
+                            </tr>
+                            <tr>
+                                <td>Numen</td>
+                                <td>Dense</td>
+                                <td>16384</td>
+                                <td>93.05%</td>
+                            </tr>
+                            <tr>
+                                <td>Numen</td>
+                                <td>Dense</td>
+                                <td>8192</td>
+                                <td>89.85%</td>
+                            </tr>
+                            <tr>
+                                <td>Promptriever</td>
+                                <td>Dense</td>
+                                <td>4096</td>
+                                <td>18.9%</td>
+                            </tr>
+                            <tr>
+                                <td>GritLM 7B</td>
+                                <td>Dense</td>
+                                <td>4096</td>
+                                <td>12.9%</td>
+                            </tr>
+                            <tr>
+                                <td>E5-Mistral 7B</td>
+                                <td>Dense</td>
+                                <td>4096</td>
+                                <td>8.3%</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <div style="margin-top:1.5rem;">
+                        <span class="project-stat">Jupyter Notebook</span>
+                        <span class="project-stat">Apache 2.0</span>
+                        <span class="project-stat">arXiv 2026</span>
+                        <span class="project-stat">43 commits</span>
+                    </div>
+                    <div style="margin-top:1.2rem;">
+                        <a href="https://github.com/sangeet01/limitnumen" target="_blank" class="project-link">View
+                            Repository</a>
+                        &nbsp;&nbsp;
+                        <a href="https://arxiv.org/abs/2601.15205" target="_blank" class="project-link">arXiv Paper</a>
+                    </div>
+                </div>
+                <div class="pcf-stats">
+                    <div class="stat-block">
+                        <div class="stat-num">93.9%</div>
+                        <div class="stat-lbl">Recall@100 on the LIMIT benchmark</div>
+                    </div>
+                    <div class="stat-block">
+                        <div class="stat-num" style="color:var(--accent2);">#1</div>
+                        <div class="stat-lbl">First dense model to beat BM25</div>
+                    </div>
+                    <div class="stat-block">
+                        <div class="stat-num" style="color:var(--accent3);">0</div>
+                        <div class="stat-lbl">Training examples required</div>
+                    </div>
+                    <div class="stat-block">
+                        <div class="stat-num">∞</div>
+                        <div class="stat-lbl">Scalable to any dimension</div>
+                    </div>
+                </div>
+            </div>
 
-      <!-- 2. Script -->
-      <div class="project-card-full reveal" style="--card-accent: #a87db8;">
-        <div class="pcf-left">
-          <div class="project-tag">Computational Chemistry · Molecular Analysis</div>
-          <h3 class="project-name">Script</h3>
-          <p class="project-desc">
-            Molecules are not flat strings. They carry geometry, bond topology, charge distribution,
-            and stereochemistry that make them hard to reason about systematically. Script is a
-            focused Python tool designed to cut through this complexity linearly: given a molecular
-            input, it walks through the chemical structure step by step, extracting, processing, and
-            surfacing meaningful properties at each layer.
-          </p>
-          <p class="project-desc">
-            The philosophy is deliberate simplicity. Rather than building an opaque pipeline,
-            Script unrolls molecular reasoning into a transparent linear sequence that can be
-            inspected, modified, and extended. A tool for understanding as much as for computing.
-            It reflects the same sensibility running through the rest of my work: start with the
-            first principles, then build exactly as much structure as the problem demands.
-          </p>
-          <div style="margin-top:1.5rem;">
-            <span class="project-stat">Python</span>
-            <span class="project-stat">Molecular</span>
-            <span class="project-stat">Computational Chemistry</span>
-          </div>
-          <div style="margin-top:1.2rem;">
-            <a href="https://github.com/sangeet01/script" target="_blank" class="project-link">View Repository</a>
-          </div>
-        </div>
-        <div class="pcf-stats">
-          <div class="stat-block">
-            <div class="stat-num" style="color:#a87db8;">⬡</div>
-            <div class="stat-lbl">Molecular structure traversal</div>
-          </div>
-          <div class="stat-block">
-            <div class="stat-num" style="color:var(--accent);">1→N</div>
-            <div class="stat-lbl">Linear step-by-step analysis</div>
-          </div>
-          <div class="stat-block">
-            <div class="stat-num" style="color:var(--accent2);">Pure</div>
-            <div class="stat-lbl">First-principles approach</div>
-          </div>
-          <div class="stat-block">
-            <div class="stat-num" style="color:var(--accent3);">Py</div>
-            <div class="stat-lbl">Python — no black boxes</div>
-          </div>
-        </div>
-      </div>
+            <!-- 2. Script -->
+            <div class="project-card-full reveal" style="--card-accent: #a87db8;">
+                <div class="pcf-left">
+                    <div class="project-tag">Cheminformatics - Linguistic Notation</div>
+                    <h3 class="project-name">Structural Chemical Representation In Plain Text (SCRIPT)</h3>
+                    <p class="project-desc">
+                        Structural Chemical Representation In Plain Text (SCRIPT) is a deterministic, sovereign
+                        molecular notation system governed by a formal language grammar and a high-performance parsing
+                        engine.
+                        Inspired by the algebraic recursion of Paninian grammar, SCRIPT derives the entire complexity of
+                        chemical space from a minimal set of generative axioms, replacing the non-deterministic
+                        heuristics of
+                        SMILES with a mathematically rigorous engine that ensures absolute state consistency and 100%
+                        round-trip fidelity.
+                    </p>
+                    <p class="project-desc">
+                        Spanning the full spectrum from the simplest molecules like methane to the high-complexity
+                        scaffolds of materials science research, SCRIPT provides a unified representation from
+                        macroscopic crystallography to quantum spin states. It is an RDKit-independent sovereign engine
+                        built from first principles to provide a mathematically stable "one true string" for every
+                        molecule, reaction, and material.
+                    </p>
+                    <div style="margin-top:1.5rem;">
+                        <span class="project-stat">Parsing Engine</span>
+                        <span class="project-stat">Linguistic Grammar</span>
+                        <span class="project-stat">Cheminformatics</span>
+                    </div>
+                    <div style="margin-top:1.2rem;">
+                        <a href="https://github.com/sangeet01/script" target="_blank" class="project-link">View
+                            Repository</a>
+                    </div>
+                </div>
+                <div class="pcf-stats">
+                    <div class="stat-block">
+                        <div class="stat-num" style="color:#a87db8;">[*]</div>
+                        <div class="stat-lbl">Sovereign Parsing Engine</div>
+                    </div>
+                    <div class="stat-block">
+                        <div class="stat-num" style="color:var(--accent);">1->N</div>
+                        <div class="stat-lbl">Paninian Grammar Model</div>
+                    </div>
+                    <div class="stat-block">
+                        <div class="stat-num" style="color:var(--accent2);">True</div>
+                        <div class="stat-lbl">100% Round-trip Fidelity</div>
+                    </div>
+                    <div class="stat-block">
+                        <div class="stat-num" style="color:var(--accent3);">Any</div>
+                        <div class="stat-lbl">Scale (Quantum to Macro)</div>
+                    </div>
+                </div>
+            </div>
 
-      <!-- 3. Keybox -->
-      <div class="project-card-full reveal" style="--card-accent: #8b9cc8;">
-        <div class="pcf-left">
-          <div class="project-tag">Computational Pharmaceutics · Physics Simulation</div>
-          <h3 class="project-name">Keybox</h3>
-          <p class="project-desc">
-            In drug formulation, determining whether an active pharmaceutical ingredient (API) is
-            chemically compatible with its excipients, including the inert fillers, binders, and coatings
-            that make a tablet, typically requires months of stability testing and expensive lab
-            work. Incompatibilities discovered late in development cost millions and can kill drug
-            candidates entirely.
-          </p>
-          <p class="project-desc">
-            Keybox approaches this entirely in silico using a <strong style="color:var(--accent3);">physics-based
-              voxel platform</strong> grounded in 11-channel field theory and first-principles mechanics.
-            Each voxel encodes the local chemical environment across 11 physical channels, such as electrostatics,
-            van der Waals interactions, hydrogen bonding, hydrophobicity, and more. The platform
-            simulates how API and excipient fields interact at the molecular interface to predict
-            incompatibility before a single experiment is run.
-          </p>
-          <div style="margin-top:1.5rem;">
-            <span class="project-stat">Python</span>
-            <span class="project-stat">11-channel field theory</span>
-            <span class="project-stat">Voxel simulation</span>
-            <span class="project-stat">First-principles mechanics</span>
-          </div>
-          <div style="margin-top:1.2rem;">
-            <a href="https://github.com/sangeet01/keybox" target="_blank" class="project-link">View Repository</a>
-          </div>
-        </div>
-        <div class="pcf-stats">
-          <div class="stat-block">
-            <div class="stat-num" style="color:var(--accent3);">11</div>
-            <div class="stat-lbl">Physical channels per voxel</div>
-          </div>
-          <div class="stat-block">
-            <div class="stat-num">0</div>
-            <div class="stat-lbl">Lab experiments needed to screen</div>
-          </div>
-          <div class="stat-block">
-            <div class="stat-num" style="color:var(--accent2);">∞</div>
-            <div class="stat-lbl">API-excipient pairs testable</div>
-          </div>
-          <div class="stat-block">
-            <div class="stat-num" style="color:var(--accent);">3D</div>
-            <div class="stat-lbl">Voxel field simulation</div>
-          </div>
-        </div>
-      </div>
+            <!-- 3. Keybox -->
+            <div class="project-card-full reveal" style="--card-accent: #8b9cc8;">
+                <div class="pcf-left">
+                    <div class="project-tag">Computational Pharmaceutics · Physics Simulation</div>
+                    <h3 class="project-name">Keybox</h3>
+                    <p class="project-desc">
+                        In drug formulation, determining whether an active pharmaceutical ingredient (API) is
+                        chemically compatible with its excipients, including the inert fillers, binders, and coatings
+                        that make a tablet, typically requires months of stability testing and expensive lab
+                        work. Incompatibilities discovered late in development cost millions and can kill drug
+                        candidates entirely.
+                    </p>
+                    <p class="project-desc">
+                        Keybox approaches this entirely in silico using a <strong
+                            style="color:var(--accent3);">physics-based
+                            voxel platform</strong> grounded in 11-channel field theory and first-principles mechanics.
+                        Each voxel encodes the local chemical environment across 11 physical channels, such as
+                        electrostatics,
+                        van der Waals interactions, hydrogen bonding, hydrophobicity, and more. The platform
+                        simulates how API and excipient fields interact at the molecular interface to predict
+                        incompatibility before a single experiment is run.
+                    </p>
+                    <div style="margin-top:1.5rem;">
+                        <span class="project-stat">Python</span>
+                        <span class="project-stat">11-channel field theory</span>
+                        <span class="project-stat">Voxel simulation</span>
+                        <span class="project-stat">First-principles mechanics</span>
+                    </div>
+                    <div style="margin-top:1.2rem;">
+                        <a href="https://github.com/sangeet01/keybox" target="_blank" class="project-link">View
+                            Repository</a>
+                    </div>
+                </div>
+                <div class="pcf-stats">
+                    <div class="stat-block">
+                        <div class="stat-num" style="color:var(--accent3);">11</div>
+                        <div class="stat-lbl">Physical channels per voxel</div>
+                    </div>
+                    <div class="stat-block">
+                        <div class="stat-num">0</div>
+                        <div class="stat-lbl">Lab experiments needed to screen</div>
+                    </div>
+                    <div class="stat-block">
+                        <div class="stat-num" style="color:var(--accent2);">∞</div>
+                        <div class="stat-lbl">API-excipient pairs testable</div>
+                    </div>
+                    <div class="stat-block">
+                        <div class="stat-num" style="color:var(--accent);">3D</div>
+                        <div class="stat-lbl">Voxel field simulation</div>
+                    </div>
+                </div>
+            </div>
 
-      <!-- 4. Gradient Hashing -->
-      <div class="project-card-full reveal" style="--card-accent: #c4875a;">
-        <div class="pcf-left">
-          <div class="project-tag">Distributed Systems · Biology-Inspired Algorithms</div>
-          <h3 class="project-name">Gradient Hashing</h3>
-          <p class="project-desc">
-            Since 1997, distributed load balancing has been trapped by an impossible triangle:
-            you can have fast O(1) lookups (Maglev), low rehash churn (Ring Hashing), or spatial
-            locality (Geo-Hashing) — but never all three at once. Gradient Hashing breaks this
-            constraint by replacing static permutation math with a <strong style="color:var(--accent2);">physics-based
-              potential field equation</strong> modeled after how mycelial fungi route nutrients.
-          </p>
-          <p class="project-desc">
-            The inspiration: in 2010, researchers showed that slime mould independently recreated
-            Tokyo's entire rail network by minimizing energy flow. Gradient Hashing asks the same
-            question of server clusters — and gets the same elegant answer. Each routing decision
-            is governed by gravity (distance pulls traffic to nearby nodes), pressure (load pushes
-            traffic away from saturated nodes), and trust (a multiplicative filter that instantly
-            isolates Byzantine nodes). The result is a liquid system: traffic flows to the optimal
-            server and naturally spills to physical neighbors under load.
-          </p>
-          <table class="benchmark-table">
-            <thead>
-              <tr>
-                <th>Metric</th>
-                <th>Ring Hashing</th>
-                <th>Google Maglev</th>
-                <th>Gradient</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>Lookup Speed</td>
-                <td>O(log N)</td>
-                <td>O(1)</td>
-                <td class="winner-cell">O(1)</td>
-              </tr>
-              <tr>
-                <td>Throughput</td>
-                <td>0.37M req/s</td>
-                <td>0.43M req/s</td>
-                <td class="winner-cell">1.10M req/s</td>
-              </tr>
-              <tr>
-                <td>Avg. Distance</td>
-                <td>0.425</td>
-                <td>0.425</td>
-                <td class="winner-cell">0.041</td>
-              </tr>
-              <tr>
-                <td>Byzantine Resilience</td>
-                <td>94.8% fail</td>
-                <td>94.9% fail</td>
-                <td class="winner-cell">100% immune</td>
-              </tr>
-            </tbody>
-          </table>
-          <div style="margin-top:1.5rem;">
-            <span class="project-stat">Python</span>
-            <span class="project-stat">Jupyter Notebook</span>
-            <span class="project-stat">Apache 2.0</span>
-            <span class="project-stat">13 commits</span>
-          </div>
-          <div style="margin-top:1.2rem;">
-            <a href="https://github.com/sangeet01/gradient" target="_blank" class="project-link">View Repository</a>
-          </div>
-        </div>
-        <div class="pcf-stats">
-          <div class="stat-block">
-            <div class="stat-num" style="color:var(--accent2);">1.1M</div>
-            <div class="stat-lbl">Requests/sec throughput</div>
-          </div>
-          <div class="stat-block">
-            <div class="stat-num">90%</div>
-            <div class="stat-lbl">Distance reduction vs Maglev</div>
-          </div>
-          <div class="stat-block">
-            <div class="stat-num" style="color:var(--accent3);">100%</div>
-            <div class="stat-lbl">Byzantine fault immune</div>
-          </div>
-          <div class="stat-block">
-            <div class="stat-num" style="color:var(--accent);">28yr</div>
-            <div class="stat-lbl">Old constraint broken</div>
-          </div>
-        </div>
-      </div>
+            <!-- 4. Gradient Hashing -->
+            <div class="project-card-full reveal" style="--card-accent: #c4875a;">
+                <div class="pcf-left">
+                    <div class="project-tag">Distributed Systems · Biology-Inspired Algorithms</div>
+                    <h3 class="project-name">Gradient Hashing</h3>
+                    <p class="project-desc">
+                        Since 1997, distributed load balancing has been trapped by an impossible triangle:
+                        you can have fast O(1) lookups (Maglev), low rehash churn (Ring Hashing), or spatial
+                        locality (Geo-Hashing), but never all three at once. Gradient Hashing breaks this
+                        constraint by replacing static permutation math with a <strong
+                            style="color:var(--accent2);">physics-based
+                            potential field equation</strong> modeled after how mycelial fungi route nutrients.
+                    </p>
+                    <p class="project-desc">
+                        The inspiration: in 2010, researchers showed that slime mould independently recreated
+                        Tokyo's entire rail network by minimizing energy flow. Gradient Hashing asks the same
+                        question of server clusters, and gets the same elegant answer. Each routing decision
+                        is governed by gravity (distance pulls traffic to nearby nodes), pressure (load pushes
+                        traffic away from saturated nodes), and trust (a multiplicative filter that instantly
+                        isolates Byzantine nodes). The result is a liquid system: traffic flows to the optimal
+                        server and naturally spills to physical neighbors under load.
+                    </p>
+                    <table class="benchmark-table">
+                        <thead>
+                            <tr>
+                                <th>Metric</th>
+                                <th>Ring Hashing</th>
+                                <th>Google Maglev</th>
+                                <th>Gradient</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Lookup Speed</td>
+                                <td>O(log N)</td>
+                                <td>O(1)</td>
+                                <td class="winner-cell">O(1)</td>
+                            </tr>
+                            <tr>
+                                <td>Throughput</td>
+                                <td>0.37M req/s</td>
+                                <td>0.43M req/s</td>
+                                <td class="winner-cell">1.10M req/s</td>
+                            </tr>
+                            <tr>
+                                <td>Avg. Distance</td>
+                                <td>0.425</td>
+                                <td>0.425</td>
+                                <td class="winner-cell">0.041</td>
+                            </tr>
+                            <tr>
+                                <td>Byzantine Resilience</td>
+                                <td>94.8% fail</td>
+                                <td>94.9% fail</td>
+                                <td class="winner-cell">100% immune</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <div style="margin-top:1.5rem;">
+                        <span class="project-stat">Python</span>
+                        <span class="project-stat">Jupyter Notebook</span>
+                        <span class="project-stat">Apache 2.0</span>
+                        <span class="project-stat">13 commits</span>
+                    </div>
+                    <div style="margin-top:1.2rem;">
+                        <a href="https://github.com/sangeet01/gradient" target="_blank" class="project-link">View
+                            Repository</a>
+                    </div>
+                </div>
+                <div class="pcf-stats">
+                    <div class="stat-block">
+                        <div class="stat-num" style="color:var(--accent2);">1.1M</div>
+                        <div class="stat-lbl">Requests/sec throughput</div>
+                    </div>
+                    <div class="stat-block">
+                        <div class="stat-num">90%</div>
+                        <div class="stat-lbl">Distance reduction vs Maglev</div>
+                    </div>
+                    <div class="stat-block">
+                        <div class="stat-num" style="color:var(--accent3);">100%</div>
+                        <div class="stat-lbl">Byzantine fault immune</div>
+                    </div>
+                    <div class="stat-block">
+                        <div class="stat-num" style="color:var(--accent);">28yr</div>
+                        <div class="stat-lbl">Old constraint broken</div>
+                    </div>
+                </div>
+            </div>
 
-      <!-- 5. Matryoshka Protocol -->
-      <div class="project-card-full reveal" style="--card-accent: #e05a5a;">
-        <div class="pcf-left">
-          <div class="project-tag">Cryptography · Secure Messaging · PyPI</div>
-          <h3 class="project-name">Matryoshka Protocol</h3>
-          <p class="project-desc">
-            Shannon's three pillars of cryptography (secrecy, authentication, and steganography)
-            have never been achieved simultaneously in a single messaging system. Matryoshka Protocol
-            is the first implementation to claim all three. Messages are hidden inside ordinary web
-            traffic (JSON API responses, HTTP headers, EXIF metadata) with a mathematically proven
-            detection probability approaching zero, making encrypted communication
-            <strong style="color:#e05a5a;">statistically indistinguishable from regular browsing</strong>.
-          </p>
-          <p class="project-desc">
-            At its core is a novel <strong style="color:#e05a5a;">Fractal Group Ratchet</strong> — the
-            first group encryption algorithm with O(1) decryption complexity regardless of group size,
-            combined with Schnorr-based zero-knowledge proofs for self-healing session recovery, post-quantum
-            Kyber-1024 + Dilithium hybrid cryptography, and a fully serverless P2P architecture with
-            k-anonymity peer discovery. Ships as both a Python library (on PyPI) and a Rust crate.
-          </p>
-          <table class="benchmark-table">
-            <thead>
-              <tr>
-                <th>Feature</th>
-                <th>Signal</th>
-                <th>Matryoshka</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>Traffic Invisibility</td>
-                <td>Detectable</td>
-                <td class="winner-cell">ε→0 (math proven)</td>
-              </tr>
-              <tr>
-                <td>Group Encryption</td>
-                <td>O(n) pairwise</td>
-                <td class="winner-cell">O(1) Fractal Ratchet</td>
-              </tr>
-              <tr>
-                <td>Session Recovery</td>
-                <td>Full re-handshake</td>
-                <td class="winner-cell">3-message self-heal</td>
-              </tr>
-              <tr>
-                <td>Architecture</td>
-                <td>Centralized servers</td>
-                <td class="winner-cell">Decentralized P2P</td>
-              </tr>
-              <tr>
-                <td>Quantum Resistance</td>
-                <td>Planned</td>
-                <td class="winner-cell">Kyber-1024 + Dilithium</td>
-              </tr>
-              <tr>
-                <td>Message Speed</td>
-                <td>50–100ms</td>
-                <td class="winner-cell">~25ms (Rust)</td>
-              </tr>
-            </tbody>
-          </table>
-          <div style="margin-top:1.5rem;">
-            <span class="project-stat">Python + Rust</span>
-            <span class="project-stat">PyPI: matp</span>
-            <span class="project-stat">178 commits</span>
-            <span class="project-stat">55/55 tests passing</span>
-          </div>
-          <div style="margin-top:1.2rem;">
-            <a href="https://github.com/sangeet01/matp" target="_blank" class="project-link">View Repository</a>
-            &nbsp;&nbsp;
-            <a href="https://pypi.org/project/matp/" target="_blank" class="project-link">PyPI Package</a>
-          </div>
-        </div>
-        <div class="pcf-stats">
-          <div class="stat-block">
-            <div class="stat-num" style="color:#e05a5a;">O(1)</div>
-            <div class="stat-lbl">Group decrypt for any size</div>
-          </div>
-          <div class="stat-block">
-            <div class="stat-num" style="color:var(--accent2);">ε→0</div>
-            <div class="stat-lbl">Detection probability</div>
-          </div>
-          <div class="stat-block">
-            <div class="stat-num" style="color:var(--accent3);">25ms</div>
-            <div class="stat-lbl">Per message in Rust</div>
-          </div>
-          <div class="stat-block">
-            <div class="stat-num">3</div>
-            <div class="stat-lbl">Messages to self-heal</div>
-          </div>
-        </div>
-      </div>
+            <!-- 5. Matryoshka Protocol -->
+            <div class="project-card-full reveal" style="--card-accent: #e05a5a;">
+                <div class="pcf-left">
+                    <div class="project-tag">Cryptography · Secure Messaging · PyPI</div>
+                    <h3 class="project-name">Matryoshka Protocol</h3>
+                    <p class="project-desc">
+                        Shannon's three pillars of cryptography (secrecy, authentication, and steganography)
+                        have never been achieved simultaneously in a single messaging system. Matryoshka Protocol
+                        is the first implementation to claim all three. Messages are hidden inside ordinary web
+                        traffic (JSON API responses, HTTP headers, EXIF metadata) with a mathematically proven
+                        detection probability approaching zero, making encrypted communication
+                        <strong style="color:#e05a5a;">statistically indistinguishable from regular browsing</strong>.
+                    </p>
+                    <p class="project-desc">
+                        At its core is a novel <strong style="color:#e05a5a;">Fractal Group Ratchet</strong> :
+                        a group encryption algorithm with O(1) decryption complexity regardless of group size.
+                        Combined with Schnorr-based zero-knowledge proofs for self-healing session recovery,
+                        post-quantum
+                        Kyber-1024 + Dilithium hybrid cryptography, and a fully serverless P2P architecture with
+                        k-anonymity peer discovery. Ships as a Python library (on PyPI) and a Rust for performance.
+                    </p>
+                    <table class="benchmark-table">
+                        <thead>
+                            <tr>
+                                <th>Feature</th>
+                                <th>Signal</th>
+                                <th>Matryoshka</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Traffic Invisibility</td>
+                                <td>Detectable</td>
+                                <td class="winner-cell">ε→0 (math proven)</td>
+                            </tr>
+                            <tr>
+                                <td>Group Encryption</td>
+                                <td>O(n) pairwise</td>
+                                <td class="winner-cell">O(1) Fractal Ratchet</td>
+                            </tr>
+                            <tr>
+                                <td>Session Recovery</td>
+                                <td>Full re-handshake</td>
+                                <td class="winner-cell">3-message self-heal</td>
+                            </tr>
+                            <tr>
+                                <td>Architecture</td>
+                                <td>Centralized servers</td>
+                                <td class="winner-cell">Decentralized P2P</td>
+                            </tr>
+                            <tr>
+                                <td>Quantum Resistance</td>
+                                <td>Planned</td>
+                                <td class="winner-cell">Kyber-1024 + Dilithium</td>
+                            </tr>
+                            <tr>
+                                <td>Message Speed</td>
+                                <td>50–100ms</td>
+                                <td class="winner-cell">~25ms (Rust)</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <div style="margin-top:1.5rem;">
+                        <span class="project-stat">Python + Rust</span>
+                        <span class="project-stat">PyPI: matp</span>
+                        <span class="project-stat">178 commits</span>
+                        <span class="project-stat">55/55 tests passing</span>
+                    </div>
+                    <div style="margin-top:1.2rem;">
+                        <a href="https://github.com/sangeet01/matp" target="_blank" class="project-link">View
+                            Repository</a>
+                        &nbsp;&nbsp;
+                        <a href="https://pypi.org/project/matp/" target="_blank" class="project-link">PyPI Package</a>
+                    </div>
+                </div>
+                <div class="pcf-stats">
+                    <div class="stat-block">
+                        <div class="stat-num" style="color:#e05a5a;">O(1)</div>
+                        <div class="stat-lbl">Group decrypt for any size</div>
+                    </div>
+                    <div class="stat-block">
+                        <div class="stat-num" style="color:var(--accent2);">ε→0</div>
+                        <div class="stat-lbl">Detection probability</div>
+                    </div>
+                    <div class="stat-block">
+                        <div class="stat-num" style="color:var(--accent3);">25ms</div>
+                        <div class="stat-lbl">Per message in Rust</div>
+                    </div>
+                    <div class="stat-block">
+                        <div class="stat-num">3</div>
+                        <div class="stat-lbl">Messages to self-heal</div>
+                    </div>
+                </div>
+            </div>
 
-    </div>
-  </section>
-
-  <div class="section-divider"></div>
-
-  <!-- About -->
-  <section id="about">
-    <div class="section-header reveal">
-      <span class="section-num">02</span>
-      <h2 class="section-title">About</h2>
-      <div class="section-line"></div>
-    </div>
-
-    <div class="about-grid">
-      <div class="about-text reveal">
-        <p>
-          I'm Sangeet. A pharmacy undergrad from Nepal who works somewhere between a chemistry lab
-          and a Jupyter notebook and never quiet left either.
-        </p>
-        <p>
-          The work is hard to categorize because none of it was planned. I started with a curiosity and it whirlwinded.
-          My work lives at the intersection of things that don't usually talk to each other:
-          fungal nutrient transport and distributed hash tables, drug formulation science and
-          field theory, retrieval theory and cryptography. I'm drawn to problems
-          where the right analogy from one domain completely unlocks another.
-        </p>
-        <p>
-          I have an arXiv paper on information retrieval, a benchmarked load balancer inspired
-          by slime mould, a pharmaceutical simulation platform, a molecular grammar for computational chemistry,
-          and a cryptographic protocol that mathematically proves its own undetectability.
-          Chemistry is messy. Code is precise. I use both.
-        </p>
-        <p class="about-ps">
-          <em>PS: Sangeet's the name, a daft undergrad splashing through chemistry and code like a toddler—my
-            titrations are a mess, and I've used my mouth to pipette.</em>
-        </p>
-      </div>
-      <div class="about-aside reveal">
-        <div class="info-block">
-          <div class="info-label">Location</div>
-          <div class="info-value">Nepal 🇳🇵</div>
         </div>
-        <div class="info-block">
-          <div class="info-label">Status</div>
-          <div class="info-value">Pharmacy Undergrad</div>
+    </section>
+
+    <div class="section-divider"></div>
+
+    <!-- About -->
+    <section id="about">
+        <div class="section-header reveal">
+            <span class="section-num">02</span>
+            <h2 class="section-title">About</h2>
+            <div class="section-line"></div>
         </div>
-        <div class="info-block">
-          <div class="info-label">Published</div>
-          <div class="info-value">
-            <a href="https://arxiv.org/abs/2601.15205" target="_blank">arXiv:2601.15205 (2026)</a>
-          </div>
+
+        <div class="about-grid">
+            <div class="about-text reveal">
+                <p>
+                    I'm Sangeet. A pharmacy undergrad from Nepal who works somewhere between a chemistry lab
+                    and a Jupyter notebook and never quiet left either.
+                </p>
+                <p>
+                    The work is hard to categorize because none of it was planned. I started with a curiosity and it
+                    whirlwinded.
+                    My work lives at the intersection of things that don't usually talk to each other:
+                    fungal nutrient transport and distributed hash tables, drug formulation science and
+                    field theory, retrieval theory and cryptography. I'm drawn to problems
+                    where the right analogy from one domain completely unlocks another.
+                </p>
+                <p>
+                    I have an arXiv paper on information retrieval, a benchmarked load balancer inspired
+                    by slime mould, a pharmaceutical simulation platform, a molecular grammar for computational
+                    chemistry,
+                    and a cryptographic protocol that mathematically proves its own undetectability.
+                    Chemistry is messy. Code is precise. I like both.
+                </p>
+                <p class="about-ps">
+                    <em>PS: Sangeet's the name, a daft undergrad splashing through chemistry and code like a toddler—my
+                        titrations are a mess, and I've used my mouth to pipette.</em>
+                </p>
+            </div>
+            <div class="about-aside reveal">
+                <div class="info-block">
+                    <div class="info-label">Location</div>
+                    <div class="info-value">Nepal 🇳🇵</div>
+                </div>
+                <div class="info-block">
+                    <div class="info-label">Status</div>
+                    <div class="info-value">Pharmacy Undergrad</div>
+                </div>
+                <div class="info-block">
+                    <div class="info-label">Published</div>
+                    <div class="info-value">
+                        <a href="https://arxiv.org/abs/2601.15205" target="_blank">arXiv:2601.15205 (2026)</a>
+                    </div>
+                </div>
+                <div class="info-block">
+                    <div class="info-label">Connect</div>
+                    <div class="info-value">
+                        <a href="https://linkedin.com/in/sangeet-sangit" target="_blank">LinkedIn</a>
+                        &nbsp;·&nbsp;
+                        <a href="https://github.com/sangeet01" target="_blank">GitHub</a>
+                    </div>
+                </div>
+                <div class="info-block">
+                    <div class="info-label">Research Themes</div>
+                    <div class="tags-list">
+                        <span class="tag">Information Retrieval</span>
+                        <span class="tag">Distributed Systems</span>
+                        <span class="tag">Computational Chemistry</span>
+                        <span class="tag">Field Theory</span>
+                        <span class="tag">Biology-Inspired Algorithms</span>
+                        <span class="tag">Dense Retrieval</span>
+                    </div>
+                </div>
+            </div>
         </div>
-        <div class="info-block">
-          <div class="info-label">Connect</div>
-          <div class="info-value">
-            <a href="https://linkedin.com/in/sangeet-sangit" target="_blank">LinkedIn</a>
-            &nbsp;·&nbsp;
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-name">Sangeet Sharma</div>
+        <div class="footer-meta">sangeet01.github.io · Nepal · 2026</div>
+        <div class="footer-links">
             <a href="https://github.com/sangeet01" target="_blank">GitHub</a>
-          </div>
+            <a href="https://linkedin.com/in/sangeet-sangit" target="_blank">LinkedIn</a>
+            <a href="https://arxiv.org/abs/2601.15205" target="_blank">arXiv</a>
         </div>
-        <div class="info-block">
-          <div class="info-label">Research Themes</div>
-          <div class="tags-list">
-            <span class="tag">Information Retrieval</span>
-            <span class="tag">Distributed Systems</span>
-            <span class="tag">Computational Chemistry</span>
-            <span class="tag">Field Theory</span>
-            <span class="tag">Biology-Inspired Algorithms</span>
-            <span class="tag">Dense Retrieval</span>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
+    </footer>
 
-  <!-- Footer -->
-  <footer>
-    <div class="footer-name">Sangeet Sharma</div>
-    <div class="footer-meta">sangeet01.github.io · Nepal · 2026</div>
-    <div class="footer-links">
-      <a href="https://github.com/sangeet01" target="_blank">GitHub</a>
-      <a href="https://linkedin.com/in/sangeet-sangit" target="_blank">LinkedIn</a>
-      <a href="https://arxiv.org/abs/2601.15205" target="_blank">arXiv</a>
-    </div>
-  </footer>
+    <script>
+        // Navbar scroll effect
+        const navbar = document.getElementById('navbar');
+        window.addEventListener('scroll', () => {
+            navbar.classList.toggle('scrolled', window.scrollY > 40);
+        });
 
-  <script>
-    // Navbar scroll effect
-    const navbar = document.getElementById('navbar');
-    window.addEventListener('scroll', () => {
-      navbar.classList.toggle('scrolled', window.scrollY > 40);
-    });
+        // Theme toggle
+        const root = document.documentElement;
+        const toggleBtn = document.getElementById('themeToggle');
+        const savedTheme = localStorage.getItem('theme');
+        if (savedTheme === 'light') root.classList.add('light');
 
-    // Theme toggle
-    const root = document.documentElement;
-    const toggleBtn = document.getElementById('themeToggle');
-    const savedTheme = localStorage.getItem('theme');
-    if (savedTheme === 'light') root.classList.add('light');
+        toggleBtn.addEventListener('click', () => {
+            root.classList.toggle('light');
+            localStorage.setItem('theme', root.classList.contains('light') ? 'light' : 'dark');
+        });
 
-    toggleBtn.addEventListener('click', () => {
-      root.classList.toggle('light');
-      localStorage.setItem('theme', root.classList.contains('light') ? 'light' : 'dark');
-    });
-
-    // Scroll reveal
-    const reveals = document.querySelectorAll('.reveal');
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach((entry, i) => {
-        if (entry.isIntersecting) {
-          setTimeout(() => entry.target.classList.add('visible'), i * 80);
-          observer.unobserve(entry.target);
-        }
-      });
-    }, { threshold: 0.1 });
-    reveals.forEach(el => observer.observe(el));
-  </script>
+        // Scroll reveal
+        const reveals = document.querySelectorAll('.reveal');
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach((entry, i) => {
+                if (entry.isIntersecting) {
+                    setTimeout(() => entry.target.classList.add('visible'), i * 80);
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.1 });
+        reveals.forEach(el => observer.observe(el));
+    </script>
 </body>
 
 </html>
