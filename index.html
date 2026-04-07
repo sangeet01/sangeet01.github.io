@@ -826,36 +826,170 @@
             transform: translateY(0);
         }
 
-        /* Mobile */
+        /* ── Hamburger menu (mobile only) ── */
+        .nav-hamburger {
+            display: none;
+            flex-direction: column;
+            justify-content: center;
+            gap: 5px;
+            background: none;
+            border: 1px solid var(--border);
+            cursor: pointer;
+            width: 36px;
+            height: 36px;
+            border-radius: 4px;
+            align-items: center;
+            padding: 0;
+            transition: border-color 0.2s;
+        }
+        .nav-hamburger:hover { border-color: var(--accent); }
+        .nav-hamburger span {
+            display: block;
+            width: 16px;
+            height: 1px;
+            background: var(--muted);
+            transition: transform 0.3s, opacity 0.3s, background 0.2s;
+        }
+        .nav-hamburger.open span:nth-child(1) { transform: translateY(6px) rotate(45deg); background: var(--accent); }
+        .nav-hamburger.open span:nth-child(2) { opacity: 0; }
+        .nav-hamburger.open span:nth-child(3) { transform: translateY(-6px) rotate(-45deg); background: var(--accent); }
+
+        /* Mobile slide-down nav drawer */
+        .nav-drawer {
+            display: none;
+            position: fixed;
+            top: 57px;
+            left: 0;
+            right: 0;
+            background: var(--nav-scrolled-bg);
+            backdrop-filter: blur(16px);
+            border-bottom: 1px solid var(--border);
+            z-index: 99;
+            padding: 1.2rem 1.5rem 1.5rem;
+            flex-direction: column;
+            gap: 0;
+        }
+        .nav-drawer.open { display: flex; }
+        .nav-drawer a {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.78rem;
+            color: var(--muted);
+            text-decoration: none;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            padding: 0.85rem 0;
+            border-bottom: 1px solid var(--border);
+            transition: color 0.2s;
+        }
+        .nav-drawer a:last-child { border-bottom: none; }
+        .nav-drawer a:hover { color: var(--accent); }
+
+        /* ── Tablet (769 – 1024px) ── */
+        @media (max-width: 1024px) {
+            .hero {
+                grid-template-columns: 1fr 1fr;
+            }
+            .hero-left {
+                padding: 7rem 3rem 4rem;
+            }
+            .hero-visual {
+                width: 280px;
+                height: 280px;
+            }
+            .ring-1 { width: 250px; height: 250px; }
+            .ring-2 { width: 190px; height: 190px; }
+            .ring-3 { width: 130px; height: 130px; }
+            section {
+                padding: 5rem 3rem;
+            }
+            .project-card-full {
+                grid-template-columns: 1fr 220px;
+                gap: 2.5rem;
+            }
+            .about-grid {
+                gap: 3rem;
+            }
+            footer {
+                padding: 3rem;
+            }
+        }
+
+        /* ── Mobile (≤ 768px) ── */
         @media (max-width: 768px) {
             nav {
-                padding: 1rem 1.5rem;
+                padding: 0.9rem 1.25rem;
             }
 
             .nav-links {
-                display: none;
+                display: none; /* replaced by drawer */
             }
 
+            .nav-hamburger {
+                display: flex;
+            }
+
+            /* Hero: single column, visual shown small below text */
             .hero {
                 grid-template-columns: 1fr;
+                min-height: auto;
             }
 
             .hero-left {
-                padding: 6rem 2rem 3rem;
+                padding: 5.5rem 1.5rem 2rem;
+                order: 1;
             }
 
             .hero-right {
+                order: 2;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                padding: 1rem 0 2.5rem;
+                min-height: 220px;
+            }
+
+            .hero-visual {
+                width: 200px;
+                height: 200px;
+            }
+
+            .ring-1 { width: 185px; height: 185px; }
+            .ring-2 { width: 140px; height: 140px; }
+            .ring-3 { width: 96px;  height: 96px;  }
+
+            .hero-vertical-label {
                 display: none;
             }
 
-            section {
-                padding: 4rem 2rem;
+            .hero-name {
+                font-size: clamp(2.4rem, 11vw, 3.4rem);
             }
 
+            .hero-links {
+                flex-wrap: wrap;
+            }
+
+            section {
+                padding: 3.5rem 1.25rem;
+            }
+
+            .section-divider {
+                margin: 0 1.25rem;
+            }
+
+            .section-title {
+                font-size: 1.8rem;
+            }
+
+            /* Projects */
             .project-card-full {
                 grid-template-columns: 1fr;
-                padding: 2rem;
+                padding: 1.75rem 1.25rem;
                 gap: 2rem;
+            }
+
+            .project-name {
+                font-size: 1.55rem;
             }
 
             .pcf-stats {
@@ -869,17 +1003,44 @@
             }
 
             .stat-num {
-                font-size: 2rem;
+                font-size: 1.9rem;
             }
 
+            /* Benchmark table — horizontally scrollable */
+            .benchmark-table {
+                display: block;
+                overflow-x: auto;
+                -webkit-overflow-scrolling: touch;
+                font-size: 0.62rem;
+            }
+
+            /* About */
             .about-grid {
                 grid-template-columns: 1fr;
+                gap: 2.5rem;
             }
 
+            .about-aside {
+                position: static; /* don't sticky on mobile */
+            }
+
+            /* Footer */
             footer {
                 flex-direction: column;
-                gap: 1.5rem;
+                gap: 1.2rem;
                 text-align: center;
+                padding: 2rem 1.25rem;
+            }
+        }
+
+        /* ── Very small phones (≤ 380px) ── */
+        @media (max-width: 380px) {
+            .hero-name {
+                font-size: 2.2rem;
+            }
+            .btn {
+                padding: 0.65rem 1.1rem;
+                font-size: 0.68rem;
             }
         }
     </style>
@@ -895,6 +1056,9 @@
             <li><a href="#about">About</a></li>
         </ul>
         <div class="nav-right">
+            <button class="nav-hamburger" id="navHamburger" aria-label="Toggle menu">
+                <span></span><span></span><span></span>
+            </button>
             <div class="nav-socials">
                 <!-- LinkedIn -->
                 <a href="https://linkedin.com/in/sangeet-sangit" target="_blank" title="LinkedIn">
@@ -930,6 +1094,12 @@
                 </svg>
             </button>
         </div>
+    </nav>
+
+    <!-- Mobile nav drawer -->
+    <nav class="nav-drawer" id="navDrawer">
+        <a href="#work" onclick="closeDrawer()">Work</a>
+        <a href="#about" onclick="closeDrawer()">About</a>
     </nav>
 
     <!-- Hero -->
@@ -1476,6 +1646,29 @@
         toggleBtn.addEventListener('click', () => {
             root.classList.toggle('light');
             localStorage.setItem('theme', root.classList.contains('light') ? 'light' : 'dark');
+        });
+
+        // Hamburger menu
+        const hamburger = document.getElementById('navHamburger');
+        const drawer = document.getElementById('navDrawer');
+
+        hamburger.addEventListener('click', () => {
+            const isOpen = drawer.classList.toggle('open');
+            hamburger.classList.toggle('open', isOpen);
+            hamburger.setAttribute('aria-expanded', isOpen);
+        });
+
+        function closeDrawer() {
+            drawer.classList.remove('open');
+            hamburger.classList.remove('open');
+            hamburger.setAttribute('aria-expanded', false);
+        }
+
+        // Close drawer on outside click
+        document.addEventListener('click', (e) => {
+            if (!navbar.contains(e.target) && !drawer.contains(e.target)) {
+                closeDrawer();
+            }
         });
 
         // Scroll reveal
