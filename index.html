@@ -352,7 +352,8 @@
         .dot-1 {
             width: 8px;
             height: 8px;
-            background: var(--accent);
+            background: #7eb8a4;
+            /* Numen */
             top: 10px;
             left: 50%;
             animation: orbit1 30s linear infinite;
@@ -361,7 +362,8 @@
         .dot-2 {
             width: 6px;
             height: 6px;
-            background: var(--accent2);
+            background: #a87db8;
+            /* Script */
             top: 50%;
             left: 10px;
             animation: orbit2 20s linear infinite reverse;
@@ -370,10 +372,44 @@
         .dot-3 {
             width: 5px;
             height: 5px;
-            background: var(--accent3);
+            background: #8b9cc8;
+            /* Keybox */
             top: 50%;
             right: 10px;
             animation: orbit3 14s linear infinite;
+        }
+
+        .dot-4 {
+            width: 8px;
+            height: 8px;
+            background: #76b8bd;
+            /* Khukuri */
+            top: 10px;
+            left: 50%;
+            animation: orbit1 30s linear infinite;
+            animation-delay: -15s;
+        }
+
+        .dot-5 {
+            width: 6px;
+            height: 6px;
+            background: #c4875a;
+            /* Gradient */
+            top: 50%;
+            left: 10px;
+            animation: orbit2 20s linear infinite reverse;
+            animation-delay: -10s;
+        }
+
+        .dot-6 {
+            width: 5px;
+            height: 5px;
+            background: #e05a5a;
+            /* Matryoshka */
+            top: 50%;
+            right: 10px;
+            animation: orbit3 14s linear infinite;
+            animation-delay: -7s;
         }
 
         .core-circle {
@@ -391,13 +427,95 @@
             justify-content: center;
         }
 
-        .core-text {
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 0.55rem;
-            color: var(--accent);
-            letter-spacing: 0.05em;
-            text-align: center;
-            line-height: 1.6;
+        .n-dot {
+            position: absolute;
+            width: 5px;
+            height: 5px;
+            border-radius: 50%;
+            animation: jiggle 0.4s infinite ease-in-out;
+            filter: blur(0.3px);
+        }
+
+        @keyframes jiggle {
+            0% {
+                transform: translate(0, 0);
+            }
+
+            25% {
+                transform: translate(2px, -2px);
+            }
+
+            50% {
+                transform: translate(-1px, 2px);
+            }
+
+            75% {
+                transform: translate(2px, 1px);
+            }
+
+            100% {
+                transform: translate(0, 0);
+            }
+        }
+
+        .nd-1 {
+            background: #7eb8a4;
+            top: 40%;
+            left: 45%;
+            animation-delay: -0.1s;
+        }
+
+        .nd-2 {
+            background: #a87db8;
+            top: 48%;
+            left: 52%;
+            animation-delay: -0.3s;
+            animation-duration: 0.35s;
+        }
+
+        .nd-3 {
+            background: #8b9cc8;
+            top: 42%;
+            left: 55%;
+            animation-delay: -0.5s;
+        }
+
+        .nd-4 {
+            background: #76b8bd;
+            top: 52%;
+            left: 42%;
+            animation-delay: -0.2s;
+            animation-duration: 0.45s;
+        }
+
+        .nd-5 {
+            background: #c4875a;
+            top: 45%;
+            left: 48%;
+            animation-delay: -0.7s;
+        }
+
+        .nd-6 {
+            background: #e05a5a;
+            top: 55%;
+            left: 48%;
+            animation-delay: -0.4s;
+            animation-duration: 0.3s;
+        }
+
+        .nd-7 {
+            background: #7eb8a4;
+            top: 50%;
+            left: 45%;
+            animation-delay: -0.6s;
+        }
+
+        .nd-8 {
+            background: #8b9cc8;
+            top: 45%;
+            left: 55%;
+            animation-delay: -0.8s;
+            animation-duration: 0.5s;
         }
 
         /* Vertical label on right side */
@@ -842,7 +960,11 @@
             padding: 0;
             transition: border-color 0.2s;
         }
-        .nav-hamburger:hover { border-color: var(--accent); }
+
+        .nav-hamburger:hover {
+            border-color: var(--accent);
+        }
+
         .nav-hamburger span {
             display: block;
             width: 16px;
@@ -850,9 +972,20 @@
             background: var(--muted);
             transition: transform 0.3s, opacity 0.3s, background 0.2s;
         }
-        .nav-hamburger.open span:nth-child(1) { transform: translateY(6px) rotate(45deg); background: var(--accent); }
-        .nav-hamburger.open span:nth-child(2) { opacity: 0; }
-        .nav-hamburger.open span:nth-child(3) { transform: translateY(-6px) rotate(-45deg); background: var(--accent); }
+
+        .nav-hamburger.open span:nth-child(1) {
+            transform: translateY(6px) rotate(45deg);
+            background: var(--accent);
+        }
+
+        .nav-hamburger.open span:nth-child(2) {
+            opacity: 0;
+        }
+
+        .nav-hamburger.open span:nth-child(3) {
+            transform: translateY(-6px) rotate(-45deg);
+            background: var(--accent);
+        }
 
         /* Mobile slide-down nav drawer */
         .nav-drawer {
@@ -869,7 +1002,11 @@
             flex-direction: column;
             gap: 0;
         }
-        .nav-drawer.open { display: flex; }
+
+        .nav-drawer.open {
+            display: flex;
+        }
+
         .nav-drawer a {
             font-family: 'JetBrains Mono', monospace;
             font-size: 0.78rem;
@@ -881,34 +1018,58 @@
             border-bottom: 1px solid var(--border);
             transition: color 0.2s;
         }
-        .nav-drawer a:last-child { border-bottom: none; }
-        .nav-drawer a:hover { color: var(--accent); }
+
+        .nav-drawer a:last-child {
+            border-bottom: none;
+        }
+
+        .nav-drawer a:hover {
+            color: var(--accent);
+        }
 
         /* ── Tablet (769 – 1024px) ── */
         @media (max-width: 1024px) {
             .hero {
                 grid-template-columns: 1fr 1fr;
             }
+
             .hero-left {
                 padding: 7rem 3rem 4rem;
             }
+
             .hero-visual {
                 width: 280px;
                 height: 280px;
             }
-            .ring-1 { width: 250px; height: 250px; }
-            .ring-2 { width: 190px; height: 190px; }
-            .ring-3 { width: 130px; height: 130px; }
+
+            .ring-1 {
+                width: 250px;
+                height: 250px;
+            }
+
+            .ring-2 {
+                width: 190px;
+                height: 190px;
+            }
+
+            .ring-3 {
+                width: 130px;
+                height: 130px;
+            }
+
             section {
                 padding: 5rem 3rem;
             }
+
             .project-card-full {
                 grid-template-columns: 1fr 220px;
                 gap: 2.5rem;
             }
+
             .about-grid {
                 gap: 3rem;
             }
+
             footer {
                 padding: 3rem;
             }
@@ -921,7 +1082,8 @@
             }
 
             .nav-links {
-                display: none; /* replaced by drawer */
+                display: none;
+                /* replaced by drawer */
             }
 
             .nav-hamburger {
@@ -953,9 +1115,20 @@
                 height: 200px;
             }
 
-            .ring-1 { width: 185px; height: 185px; }
-            .ring-2 { width: 140px; height: 140px; }
-            .ring-3 { width: 96px;  height: 96px;  }
+            .ring-1 {
+                width: 185px;
+                height: 185px;
+            }
+
+            .ring-2 {
+                width: 140px;
+                height: 140px;
+            }
+
+            .ring-3 {
+                width: 96px;
+                height: 96px;
+            }
 
             .hero-vertical-label {
                 display: none;
@@ -1021,7 +1194,8 @@
             }
 
             .about-aside {
-                position: static; /* don't sticky on mobile */
+                position: static;
+                /* don't sticky on mobile */
             }
 
             /* Footer */
@@ -1038,6 +1212,7 @@
             .hero-name {
                 font-size: 2.2rem;
             }
+
             .btn {
                 padding: 0.65rem 1.1rem;
                 font-size: 0.68rem;
@@ -1124,8 +1299,18 @@
                 <div class="dot dot-1"></div>
                 <div class="dot dot-2"></div>
                 <div class="dot dot-3"></div>
+                <div class="dot dot-4"></div>
+                <div class="dot dot-5"></div>
+                <div class="dot dot-6"></div>
                 <div class="core-circle">
-                    <div class="core-text">.<br />.<br />.<br />.</div>
+                    <div class="n-dot nd-1"></div>
+                    <div class="n-dot nd-2"></div>
+                    <div class="n-dot nd-3"></div>
+                    <div class="n-dot nd-4"></div>
+                    <div class="n-dot nd-5"></div>
+                    <div class="n-dot nd-6"></div>
+                    <div class="n-dot nd-7"></div>
+                    <div class="n-dot nd-8"></div>
                 </div>
             </div>
             <div class="hero-vertical-label">sangeet01.github.io</div>
@@ -1320,16 +1505,25 @@
                         Keybox approaches this entirely in silico using a <strong
                             style="color:var(--accent3);">physics-based
                             voxel platform</strong> grounded in 11-channel field theory and first-principles mechanics.
-                        Each voxel encodes the local chemical environment across 11 physical channels, such as
-                        electrostatics,
-                        van der Waals interactions, hydrogen bonding, hydrophobicity, and more. The platform
-                        simulates how API and excipient fields interact at the molecular interface to predict
-                        incompatibility before a single experiment is run.
+                        Each voxel encodes the local chemical environment across physical channels like electrostatics,
+                        van der Waals, and hydrogen bonding to predict incompatibility before a single experiment is
+                        run.
+                    </p>
+                    <p class="project-desc">
+                        Under the hood, the system is driven by the <strong style="color:var(--card-accent);">Nibble
+                            Engine</strong>.
+                        This custom 64-bit C-core replaces traditional <strong
+                            style="color:var(--card-accent);">O(N³)</strong> molecular docking
+                        with <strong style="color:var(--card-accent);">Negative Space Matrix Multiplication</strong>.
+                        It reduces physical simulation to an <strong style="color:var(--card-accent);">O(1)</strong>
+                        field projection.
+                        This evaluates binding affinities in milliseconds and renders the traditional docking bottleneck
+                        obsolete.
                     </p>
                     <div style="margin-top:1.5rem;">
-                        <span class="project-stat">11-channel field theory</span>
-                        <span class="project-stat">Voxel simulation</span>
-                        <span class="project-stat">First-principles mechanics</span>
+                        <span class="project-stat">11-Channel Field Theory</span>
+                        <span class="project-stat">Negative Space Matrix</span>
+                        <span class="project-stat">C-Native</span>
                     </div>
                     <div style="margin-top:1.2rem;">
                         <a href="https://github.com/sangeet01/keybox" target="_blank" class="project-link">View
@@ -1346,17 +1540,71 @@
                         <div class="stat-lbl">Lab experiments needed to screen</div>
                     </div>
                     <div class="stat-block">
-                        <div class="stat-num" style="color:var(--accent2);">∞</div>
-                        <div class="stat-lbl">API-excipient pairs testable</div>
+                        <div class="stat-num" style="color:var(--accent2);">O(1)</div>
+                        <div class="stat-lbl">Binding affinity complexity</div>
                     </div>
                     <div class="stat-block">
-                        <div class="stat-num" style="color:var(--accent);">3D</div>
-                        <div class="stat-lbl">Voxel field simulation</div>
+                        <div class="stat-num" style="color:var(--accent);">~70ms</div>
+                        <div class="stat-lbl">Full-pocket docking latency</div>
                     </div>
                 </div>
             </div>
 
-            <!-- 4. Gradient Hashing -->
+            <!-- 4. Khukuri -->
+            <div class="project-card-full reveal" style="--card-accent: #76b8bd;">
+                <div class="pcf-left">
+                    <div class="project-tag">Counter-Evolution Engine · Minimax Game Theory · PINCER</div>
+                    <h3 class="project-name">Khukuri</h3>
+                    <p class="project-desc">
+                        Antimicrobial Resistance (AMR) is like an evolutionary arms race. Khukuri changes the way drug
+                        discovery works by moving from searching for a single fixed molecule to managing a constant duel
+                        against evolving pathogens. It treats the interaction as a zero-sum minimax game between the
+                        Blue
+                        Team (the drug) and the Red Team (the pathogen’s predicted mutations). The goal is to find the
+                        “Skeleton Key,” a candidate that keeps strong binding power across all the possible mutations of
+                        a
+                        target receptor.
+                    </p>
+                    <p class="project-desc">
+                        Powered by the <strong style="color:var(--card-accent);">Darwin-Gödel loop</strong>, Khukuri
+                        automates the entire discovery pipeline: from
+                        target identification and genomic mutation prediction to ultra-fast <strong
+                            style="color:var(--card-accent);">O(1)</strong> docking via the
+                        Nibble
+                        engine. It is a virtual lab designed to build "future-proof" antibiotics by anticipating and
+                        neutralizing the pathogen's next move before it occurs.
+                    </p>
+                    <div style="margin-top:1.5rem;">
+                        <span class="project-stat">PINCER Engine</span>
+                        <span class="project-stat">Darwin-Gödel Loop</span>
+                        <span class="project-stat">Minimax Optimization</span>
+                    </div>
+                    <div style="margin-top:1.2rem;">
+                        <a href="https://github.com/sangeet01/khukuri" target="_blank" class="project-link">View
+                            Repository</a>
+                    </div>
+                </div>
+                <div class="pcf-stats">
+                    <div class="stat-block">
+                        <div class="stat-num" style="color:#76b8bd;">Minimax</div>
+                        <div class="stat-lbl">Zero-sum Game Discovery Logic</div>
+                    </div>
+                    <div class="stat-block">
+                        <div class="stat-num" style="color:var(--accent);">O(1)</div>
+                        <div class="stat-lbl">Integrated Nibble Docking Speed</div>
+                    </div>
+                    <div class="stat-block">
+                        <div class="stat-num" style="color:var(--accent2);">Future</div>
+                        <div class="stat-lbl">Resistant to Predicted Mutations</div>
+                    </div>
+                    <div class="stat-block">
+                        <div class="stat-num" style="color:var(--accent3);">Loop</div>
+                        <div class="stat-lbl">Autonomous Darwin-Gödel Cycle</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 5. Gradient Hashing -->
             <div class="project-card-full reveal" style="--card-accent: #c4875a;">
                 <div class="pcf-left">
                     <div class="project-tag">Distributed Systems · Biology-Inspired Algorithms</div>
@@ -1444,7 +1692,7 @@
                 </div>
             </div>
 
-            <!-- 5. Matryoshka Protocol -->
+            <!-- 6. Matryoshka Protocol -->
             <div class="project-card-full reveal" style="--card-accent: #e05a5a;">
                 <div class="pcf-left">
                     <div class="project-tag">Cryptography · Secure Messaging · PyPI</div>
