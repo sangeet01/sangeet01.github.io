@@ -1218,6 +1218,254 @@
                 font-size: 0.68rem;
             }
         }
+
+        /* ── Agent Studio (WebMCP) ────────────────────────────────────── */
+        /* A live surface where the agent writes drafts. The user can edit
+           them in place. This is the WebMCP "shared surface" — what makes
+           agent + human collaboration different from server-side MCP. */
+
+        .studio-intro {
+            max-width: 640px;
+            color: var(--muted);
+            font-size: 0.95rem;
+            line-height: 1.7;
+            margin-bottom: 3rem;
+        }
+
+        .studio-intro code {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.78rem;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            padding: 0.1rem 0.4rem;
+            border-radius: 3px;
+            color: var(--accent);
+        }
+
+        .studio-tools {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.6rem;
+            margin-bottom: 2.5rem;
+        }
+
+        .studio-tool-chip {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.68rem;
+            letter-spacing: 0.05em;
+            text-transform: lowercase;
+            color: var(--muted);
+            border: 1px solid var(--border);
+            padding: 0.4rem 0.75rem;
+            border-radius: 3px;
+            background: var(--surface);
+            transition: border-color 0.2s, color 0.2s;
+        }
+
+        .studio-tool-chip:hover {
+            border-color: var(--accent);
+            color: var(--accent);
+        }
+
+        .studio-output {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5px;
+            background: var(--border);
+            border: 1px solid var(--border);
+            min-height: 200px;
+        }
+
+        .studio-empty {
+            background: var(--bg);
+            padding: 4rem 3rem;
+            text-align: center;
+            color: var(--muted);
+        }
+
+        .studio-empty-icon {
+            font-size: 2.2rem;
+            color: var(--accent);
+            opacity: 0.4;
+            margin-bottom: 1rem;
+            font-family: 'DM Serif Display', serif;
+        }
+
+        .studio-empty-title {
+            font-family: 'DM Serif Display', serif;
+            font-size: 1.2rem;
+            color: var(--text);
+            margin-bottom: 0.8rem;
+            font-style: italic;
+        }
+
+        .studio-empty-hint {
+            font-size: 0.85rem;
+            line-height: 1.7;
+            max-width: 480px;
+            margin: 0 auto;
+        }
+
+        .studio-empty-hint code {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.72rem;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            padding: 0.1rem 0.4rem;
+            border-radius: 3px;
+            color: var(--accent);
+        }
+
+        .studio-draft {
+            background: var(--bg);
+            padding: 2.5rem 3rem;
+            position: relative;
+            border-left: 3px solid var(--accent);
+            animation: draftIn 0.4s ease-out;
+        }
+
+        @keyframes draftIn {
+            from {
+                opacity: 0;
+                transform: translateY(8px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .studio-draft[data-kind="comparison"] {
+            border-left-color: var(--accent3);
+        }
+
+        .studio-draft[data-kind="project_explanation"] {
+            border-left-color: var(--accent2);
+        }
+
+        .draft-meta {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.65rem;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: var(--muted);
+            margin-bottom: 1.5rem;
+        }
+
+        .draft-body {
+            font-family: 'Spectral', serif;
+            font-size: 1rem;
+            line-height: 1.8;
+            color: var(--text);
+            outline: none;
+            min-height: 80px;
+            padding: 0.5rem 0;
+            border-radius: 2px;
+            transition: background 0.2s;
+        }
+
+        .draft-body:focus {
+            background: var(--surface);
+            box-shadow: 0 0 0 1px var(--accent);
+            padding: 0.5rem 0.75rem;
+            margin: -0.5rem -0.75rem;
+        }
+
+        .draft-body h3,
+        .draft-body h4 {
+            font-family: 'DM Serif Display', serif;
+            color: var(--white);
+            margin: 1.5rem 0 0.75rem;
+            line-height: 1.2;
+        }
+
+        .draft-body h3 {
+            font-size: 1.5rem;
+        }
+
+        .draft-body h4 {
+            font-size: 1.15rem;
+        }
+
+        .draft-body p {
+            margin-bottom: 1rem;
+        }
+
+        .draft-body ul {
+            margin: 0.5rem 0 1rem 1.5rem;
+        }
+
+        .draft-body li {
+            margin-bottom: 0.3rem;
+            list-style: disc;
+        }
+
+        .draft-body code {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.82em;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            padding: 0.1rem 0.35rem;
+            border-radius: 2px;
+            color: var(--accent);
+        }
+
+        .draft-body strong {
+            color: var(--white);
+            font-weight: 400;
+        }
+
+        .draft-body em {
+            color: var(--accent2);
+        }
+
+        .draft-body hr {
+            border: none;
+            border-top: 1px solid var(--border);
+            margin: 1.5rem 0;
+        }
+
+        .draft-actions {
+            display: flex;
+            gap: 0.5rem;
+            margin-top: 1.5rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid var(--border);
+        }
+
+        .draft-btn {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.66rem;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            background: transparent;
+            color: var(--muted);
+            border: 1px solid var(--border);
+            padding: 0.4rem 0.85rem;
+            border-radius: 2px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .draft-btn:hover {
+            border-color: var(--accent);
+            color: var(--accent);
+            background: rgba(126, 184, 164, 0.06);
+        }
+
+        @media (max-width: 768px) {
+            .studio-draft {
+                padding: 1.75rem 1.25rem;
+            }
+
+            .studio-empty {
+                padding: 2.5rem 1.5rem;
+            }
+
+            .draft-actions {
+                flex-wrap: wrap;
+            }
+        }
     </style>
 </head>
 
@@ -1228,6 +1476,7 @@
         <div class="nav-logo">Sangeet Sharma</div>
         <ul class="nav-links">
             <li><a href="#work">Work</a></li>
+            <li><a href="#studio">Studio</a></li>
             <li><a href="#about">About</a></li>
         </ul>
         <div class="nav-right">
@@ -1274,6 +1523,7 @@
     <!-- Mobile nav drawer -->
     <nav class="nav-drawer" id="navDrawer">
         <a href="#work" onclick="closeDrawer()">Work</a>
+        <a href="#studio" onclick="closeDrawer()">Studio</a>
         <a href="#about" onclick="closeDrawer()">About</a>
     </nav>
 
@@ -1791,10 +2041,49 @@
 
     <div class="section-divider"></div>
 
+    <!-- Agent Studio (WebMCP) -->
+    <section id="studio">
+        <div class="section-header reveal">
+            <span class="section-num">02</span>
+            <h2 class="section-title">Agent Studio</h2>
+            <div class="section-line"></div>
+        </div>
+
+        <div class="studio-intro reveal">
+            <p>
+                This is a live surface. When you open this page in an agent-enabled
+                browser — <strong style="color:var(--accent);">ChatGPT's in-app browser</strong>,
+                or Chrome with <code>chrome://flags/#enable-webmcp-testing</code> —
+                the agent discovers five tools registered via <code>document.modelContext</code>.
+                It can list projects, query by theme, compare them, and <em style="color:var(--accent2);">render
+                drafts directly onto this page</em> where you can edit them in place.
+            </p>
+            <p style="margin-top: 1rem;">
+                This is the move server-side MCP cannot make: the agent and the human share
+                the same editable surface. Try asking the agent to draft a research statement
+                for a PhD application, or to compare Keybox and Khukuri on drug-discovery approach.
+            </p>
+        </div>
+
+        <div class="studio-tools reveal">
+            <span class="studio-tool-chip">list_projects</span>
+            <span class="studio-tool-chip">get_project</span>
+            <span class="studio-tool-chip">find_projects_by_theme</span>
+            <span class="studio-tool-chip">compare_projects</span>
+            <span class="studio-tool-chip">draft_research_statement</span>
+        </div>
+
+        <div class="studio-output reveal" id="agent-studio-output">
+            <!-- Populated by webmcp.js -->
+        </div>
+    </section>
+
+    <div class="section-divider"></div>
+
     <!-- About -->
     <section id="about">
         <div class="section-header reveal">
-            <span class="section-num">02</span>
+            <span class="section-num">03</span>
             <h2 class="section-title">About</h2>
             <div class="section-line"></div>
         </div>
@@ -1927,6 +2216,9 @@
         }, { threshold: 0.1 });
         reveals.forEach(el => observer.observe(el));
     </script>
+
+    <!-- WebMCP: registers tools on document.modelContext -->
+    <script src="webmcp.js"></script>
 </body>
 
 </html>
