@@ -295,7 +295,15 @@
     return card;
   }
 
+  function ensureStudioVisible() {
+    const sec = document.getElementById('studio');
+    if (sec) {
+      sec.style.display = 'block';
+    }
+  }
+
   function appendDraft(draft) {
+    ensureStudioVisible();
     const out = getStudioOutput();
     if (!out) return null;
     clearStudioEmptyState();
@@ -356,6 +364,7 @@
       if (!raw) return;
       const drafts = JSON.parse(raw);
       if (!Array.isArray(drafts)) return;
+      if (drafts.length > 0) ensureStudioVisible();
       drafts.forEach((d) => {
         if (d && typeof d.text === 'string') {
           const card = createDraftCard(d);
@@ -601,10 +610,7 @@
 
   function registerAll() {
     if (!('modelContext' in document)) {
-      // WebMCP not available in this browser. Show the studio empty state
-      // so visitors without an agent-enabled browser still see the surface.
       console.info('[WebMCP] document.modelContext not available. Tools not registered.');
-      showStudioEmpty();
       return;
     }
 
@@ -757,9 +763,6 @@
 
     // Load any persisted drafts from previous sessions
     loadPersistedDrafts();
-    if (!getStudioOutput()?.querySelector('.studio-draft')) {
-      showStudioEmpty();
-    }
   }
 
   // ─── Boot ───────────────────────────────────────────────────────────────
